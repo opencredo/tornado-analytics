@@ -12,7 +12,8 @@ setup(name='tornado-project-skeleton',
       classifiers=[],
       packages=find_packages(exclude=['tests']),
       install_requires=[
-          'tornado==4.1'
+          'tornado',
+          'google-api-python-client'
       ],
       tests_require=[
           'pytest>=2.6.0',
