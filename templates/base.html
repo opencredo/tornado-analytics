@@ -1,24 +1,23 @@
-{% load staticfiles %}
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Stub-O-Matic</title>
+    <title>{% block title %}{% end %}</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- Bootstrap 3.3.2 -->
-    <link href="{% static 'AdminLTE/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="/static/AdminLTE/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <!-- Font Awesome Icons -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"
           type="text/css"/>
     <!-- Ionicons -->
     <link href="http://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet" type="text/css"/>
     <!-- Theme style -->
-    <link href="{% static 'AdminLTE/dist/css/AdminLTE.min.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="/static/AdminLTE/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css"/>
     <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
           page. However, you can choose any other skin. Make sure you
           apply the skin class to the body tag so the changes take effect.
     -->
-    <link href="{% static 'AdminLTE/dist/css/skins/skin-blue.min.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="/static/AdminLTE/dist/css/skins/skin-blue.min.css" rel="stylesheet" type="text/css"/>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -54,7 +53,7 @@ desired effect
     <header class="main-header">
 
         <!-- Logo -->
-        <a href="/" class="logo">Stub<b>-O-</b>Matic</a>
+        <a href="/" class="logo"><b>OC-</b>Analytics</a>
 
         <!-- Header Navbar -->
         <nav class="navbar navbar-static-top" role="navigation">
@@ -71,7 +70,7 @@ desired effect
                         <!-- Menu Toggle Button -->
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                            <span class="hidden-xs">{{ user }}</span>
+                            <span class="hidden-xs">Username</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- Menu Footer-->
@@ -104,7 +103,7 @@ desired effect
                 {#              <img src="/static/AdminLTE/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" />#}
                 {#            </div>#}
                 <div class="pull-left info">
-                    <p>{{ user }}</p>
+                    <p>Username</p>
                     <!-- Status -->
                     <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                 </div>
@@ -112,9 +111,9 @@ desired effect
 
             <!-- Sidebar Menu -->
             <ul class="sidebar-menu">
-                <li class="header">Navigation. Path {{ request.path }}</li>
                 <!-- Optionally, you can add icons to the links -->
-                <li class=" {% if request.path == '/' %} active {% endif %}"><a href="/"><span>Home</span></a></li>
+
+                <li class=""><a href="/"><span>Home</span></a></li>
 
                 {#                <li class=" {% if 'measures' in request.path %} active {% endif %}"><a#}
                 {#                        href="{% url 'measures-control' %}"><span>Measures</span></a></li>#}
@@ -136,24 +135,8 @@ desired effect
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        {% if messages %}
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="box-body">
-                        {% for message in messages %}
-                            <div class="alert alert-
-                                    {% if message.tags %}{{ message.tags }}{% endif %} small alert-dismissable">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                                {{ message }}
-                            </div>
-                        {% endfor %}
-
-                    </div>
-                </div>
-            </div>
-        {% endif %}
-        {% block content %}
-        {% endblock content %}
+        {% block body %}
+        {% end body %}
     </div>
     <!-- /.content-wrapper -->
 
@@ -161,10 +144,10 @@ desired effect
     <footer class="main-footer">
         <!-- To the right -->
         <div class="pull-right hidden-xs">
-            Enable automated testing by mastering system dependencies.
+            Google analytics dashboard, built on TornadoWeb
         </div>
         <!-- Default to the left -->
-        <strong>Copyright &copy; 2015 <a href="#">SpectoLabs</a>.</strong> All rights reserved.
+        <strong>Copyright &copy; 2015 <a href="#">OpenCredo</a>.</strong> All rights reserved.
     </footer>
 
 </div>
@@ -173,17 +156,17 @@ desired effect
 <!-- REQUIRED JS SCRIPTS -->
 
 <!-- jQuery 2.1.3 -->
-<script src=" {% static 'AdminLTE/plugins/jQuery/jQuery-2.1.3.min.js' %}"></script>
+<script src="/static/AdminLTE/plugins/jQuery/jQuery-2.1.3.min.js"></script>
 <!-- Bootstrap 3.3.2 JS -->
-<script src=" {% static 'AdminLTE/bootstrap/js/bootstrap.min.js' %}" type="text/javascript"></script>
+<script src="/static/AdminLTE/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 <!-- AdminLTE App -->
-<script src=" {% static 'AdminLTE/dist/js/app.min.js' %}" type="text/javascript"></script>
+<script src="/static/AdminLTE/dist/js/app.min.js" type="text/javascript"></script>
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
       Both of these plugins are recommended to enhance the
       user experience -->
 <!-- additional javascript here -->
 {% block endjs %}
-{% endblock endjs %}
+{% end endjs %}
 </body>
 </html>
