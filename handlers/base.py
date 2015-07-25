@@ -1,13 +1,12 @@
-__author__ = 'karolisrusenas'
-from concurrent.futures import ThreadPoolExecutor
-from functools import partial, wraps
-
 import tornado.ioloop
 import json
 import tornado.web
 
+from functools import partial, wraps
+from concurrent.futures import ThreadPoolExecutor
+
 import logging
-logger = logging.getLogger('quasar.' + __name__)
+logger = logging.getLogger(__name__)
 
 
 class BaseHandler(tornado.web.RequestHandler):
@@ -58,13 +57,11 @@ def unblock(f):
         EXECUTOR = ThreadPoolExecutor(self.settings['max_process_workers'])
 
         def callback(future):
-            self.write(future.result())
-            self.finish()
+            data = future.result()
 
         EXECUTOR.submit(
             partial(f, *args, **kwargs)
         ).add_done_callback(
-            lambda future: tornado.ioloop.IOLoop.instance().add_callback(
-                partial(callback, future)))
-
+            lambda future: tornado.ioloop.IOLoop.instance().add_future(
+                future, callback))
     return wrapper

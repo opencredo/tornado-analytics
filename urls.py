@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from handlers import base
+from handlers import web_handlers
 
 
 url_patterns = [
-    (r"/", base.MainHandler),
+    (r"/", web_handlers.MainHandler),
 ]
