@@ -1,15 +1,8 @@
 ========================
-Tornado project skeleton
+Tornado G Analytics
 ========================
 
-This is my boilerplate to build a simple, fast and rock solid website. There
-are quite many Tornado template projects out there, but I wanted to
-start something from scratch, that fits my needs and evolves out of years of
-experiences (positive and negative) with other Python based webframeworks like
-Turbogears and Django.
-
-Of course this template is not designed for larger data structures. The main
-focus is on scalability, fast data access and small library dependencies.
+This is a tornado application that queries Google analytics v3 API
 
 Installation
 ============

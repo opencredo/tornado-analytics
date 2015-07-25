@@ -13,7 +13,9 @@ setup(name='tornado-project-skeleton',
       packages=find_packages(exclude=['tests']),
       install_requires=[
           'tornado',
-          'google-api-python-client'
+          'google-api-python-client',
+          'fabric',
+          'PyOpenSSL'
       ],
       tests_require=[
           'pytest>=2.6.0',
