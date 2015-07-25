@@ -154,7 +154,7 @@ class GAcess:
     def get_users(self,  profile_id=None, days=30):
         """
         Gets total unique users that are reading your posts
-        
+
         :param profile_id: integer, default is the first one in your profile
         :param days: integer, default is 30
         :return:
@@ -168,6 +168,54 @@ class GAcess:
             start_date='%sdaysAgo' % days,
             end_date='today',
             metrics='ga:users').execute()
+        print("got total users")
+        return results
+
+    def get_top_pages(self, profile_id=None, days=30, max_results=10):
+        """
+        Which posts are most popular?
+        :param profile_id:
+        :param days:
+        :param max_results:
+        :return:
+        """
+        # getting profile ID
+        if profile_id is None:
+            profile_id = self.get_first_profile_id()
+
+        results = self.service.data().ga().get(
+            ids='ga:' + profile_id,
+            start_date='%sdaysAgo' % days,
+            end_date='today',
+            metrics='ga:pageviews,ga:uniquePageviews,ga:timeOnPage,ga:bounces,ga:entrances,ga:exits',
+            dimensions='ga:pagePath',
+            max_results=max_results,
+            sort='-ga:pageviews').execute()
+        print("got top pages")
+        return results
+
+    def get_top_keywords(self,profile_id=None, days=30, max_results=10):
+        """
+        Which search terms are used to find you?
+
+        :param profile_id:
+        :param days:
+        :param max_results:
+        :return:
+        """
+        # getting profile ID
+        if profile_id is None:
+            profile_id = self.get_first_profile_id()
+
+        results = self.service.data().ga().get(
+            ids='ga:' + profile_id,
+            start_date='%sdaysAgo' % days,
+            end_date='today',
+            metrics='ga:sessions',
+            dimensions='ga:keyword',
+            filters='ga:keyword!@(not',
+            max_results=max_results,
+            sort='-ga:sessions').execute()
         print("got total users")
         return results
 
@@ -192,10 +240,6 @@ class GAcess:
         import pdb
         pdb.set_trace()
 
-        # sessions = asyncio.async(self.loop.run_in_executor(self.executor, self.get_sessions_results))
-        # sources = asyncio.async(self.loop.run_in_executor(self.executor, self.get_people_sources))
-        #
-        # self.loop.run_forever()
 
 
 
