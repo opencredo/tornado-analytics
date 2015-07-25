@@ -1,18 +1,11 @@
 """A simple example of how to access the Google Analytics API."""
 
-import argparse
-
 from googleapiclient.discovery import build
 from oauth2client.client import SignedJwtAssertionCredentials
 from pprint import pprint as pp
 import httplib2
 import os
 from concurrent.futures import ThreadPoolExecutor
-import concurrent
-from oauth2client import client
-from oauth2client import file
-from oauth2client import tools
-import asyncio
 
 
 class GAcess:
@@ -120,7 +113,7 @@ class GAcess:
             ids='ga:' + profile_id,
             start_date='%sdaysAgo' % days,
             end_date='today',
-            metrics='ga:sessions,ga:pageviews,ga:sessionDuration,ga:exits',
+            metrics='ga:sessions,ga:pageviews,ga:sessionDuration',
             dimensions='ga:source,ga:medium',
             sort='-ga:sessions',
             max_results=max_results).execute()

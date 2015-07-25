@@ -47,6 +47,7 @@ class BaseHandler(tornado.web.RequestHandler):
         logger.debug("Found '%s': %s in JSON arguments" % (name, arg))
         return arg
 
+EXECUTOR = ThreadPoolExecutor(max_workers=100)
 
 def unblock(f):
 
@@ -54,14 +55,15 @@ def unblock(f):
     @wraps(f)
     def wrapper(*args, **kwargs):
         self = args[0]
-        EXECUTOR = ThreadPoolExecutor(self.settings['max_process_workers'])
 
         def callback(future):
-            data = future.result()
+            self.write(future.result())
+            self.finish()
 
         EXECUTOR.submit(
             partial(f, *args, **kwargs)
         ).add_done_callback(
-            lambda future: tornado.ioloop.IOLoop.instance().add_future(
-                future, callback))
+            lambda future: tornado.ioloop.IOLoop.instance().add_callback(
+                partial(callback, future)))
+
     return wrapper
