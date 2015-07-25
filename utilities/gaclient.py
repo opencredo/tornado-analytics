@@ -7,9 +7,12 @@ from oauth2client.client import SignedJwtAssertionCredentials
 from pprint import pprint as pp
 import httplib2
 import os
+from concurrent.futures import ThreadPoolExecutor
+import concurrent
 from oauth2client import client
 from oauth2client import file
 from oauth2client import tools
+import asyncio
 
 
 class GAcess:
@@ -92,11 +95,13 @@ class GAcess:
         if profile_id is None:
             profile_id = self.get_first_profile_id()
 
-        return self.service.data().ga().get(
+        results = self.service.data().ga().get(
             ids='ga:' + profile_id,
             start_date='%sdaysAgo' % days,
             end_date='today',
             metrics='ga:sessions').execute()
+        print("got sessions")
+        return results
 
     def get_people_sources(self, profile_id=None, days=30, max_results=10):
         """
@@ -119,8 +124,79 @@ class GAcess:
             dimensions='ga:source,ga:medium',
             sort='-ga:sessions',
             max_results=max_results).execute()
-
+        print("got sources")
         return results
+
+    def get_top_countries(self, profile_id=None, days=30, max_results=5):
+        """
+        Get countries where your readers live
+
+        :param profile_id: integer, default is the first one in your profile
+        :param days: integer, default is 30
+        :param max_results: integer, default is 5
+        :return:
+        """
+        # getting profile ID
+        if profile_id is None:
+            profile_id = self.get_first_profile_id()
+
+        results = self.service.data().ga().get(
+            ids='ga:' + profile_id,
+            start_date='%sdaysAgo' % days,
+            end_date='today',
+            metrics='ga:sessions',
+            dimensions='ga:country',
+            sort='-ga:sessions',
+            max_results=max_results).execute()
+        print("got countries")
+        return results
+
+    def get_users(self,  profile_id=None, days=30):
+        """
+        Gets total unique users that are reading your posts
+        
+        :param profile_id: integer, default is the first one in your profile
+        :param days: integer, default is 30
+        :return:
+        """
+        # getting profile ID
+        if profile_id is None:
+            profile_id = self.get_first_profile_id()
+
+        results = self.service.data().ga().get(
+            ids='ga:' + profile_id,
+            start_date='%sdaysAgo' % days,
+            end_date='today',
+            metrics='ga:users').execute()
+        print("got total users")
+        return results
+
+    def get_dashboard_data(self):
+        import time
+        print("Entering function")
+        start = time.time()
+        with ThreadPoolExecutor(max_workers=100) as executor:
+            print("submiting tasks")
+            sessions_future = executor.submit(self.get_sessions_results)
+            sources_future = executor.submit(self.get_people_sources)
+
+            # getting future results
+            sessions = sessions_future.result()
+            print(sessions)
+            sources = sources_future.result()
+            print(sources)
+
+        finish_time = time.time()
+        print("Query complete in %s ms" % int((finish_time-start)*1000))
+
+        import pdb
+        pdb.set_trace()
+
+        # sessions = asyncio.async(self.loop.run_in_executor(self.executor, self.get_sessions_results))
+        # sources = asyncio.async(self.loop.run_in_executor(self.executor, self.get_people_sources))
+        #
+        # self.loop.run_forever()
+
 
 
 def main():
@@ -132,11 +208,11 @@ def main():
     # don't forget to add your service account email address to your google analytics users!
     service_account_email = '***REMOVED***'
     # download client secrets file from your google developer console > auth > credentials
-    key_file_location = 'client_secrets2.p12'
+    # key_file_location = 'utilities/client_secrets.p12'
 
     # authenticate and construct service
     #service = GAcess(scope, key_file_location, service_account_email)
-    service = GAcess(service_account_email=service_account_email)
+    sv = GAcess(service_account_email=service_account_email)
 
     # use service object to call commands (get_people_sources, etc..)
     import pdb
