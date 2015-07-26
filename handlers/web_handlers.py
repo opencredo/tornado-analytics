@@ -11,9 +11,6 @@ class MainHandler(BaseHandler):
 
 
 class PeopleSourcesHandler(BaseHandler):
-    def initialize(self):
-        service_account = self.settings['service_account_email']
-        self.service = GAcess(service_account_email=service_account)
 
     @cache(CACHE_EXPIRES)  # set the cache expires
     @unblock
@@ -49,6 +46,9 @@ class PeopleSourcesHandler(BaseHandler):
 
         :return:
         """
+        service_account = self.settings['service_account_email']
+        self.service = GAcess(service_account_email=service_account)
+
         query_result = self.service.get_people_sources()
         try:
             data = query_result['rows']
@@ -64,9 +64,6 @@ class PeopleSourcesHandler(BaseHandler):
 
 
 class TopCountriesHandler(BaseHandler):
-    def initialize(self):
-        service_account = self.settings['service_account_email']
-        self.service = GAcess(service_account_email=service_account)
 
     @cache(CACHE_EXPIRES)  # set the cache expires
     @unblock
@@ -93,6 +90,9 @@ class TopCountriesHandler(BaseHandler):
 
         :return:
         """
+        service_account = self.settings['service_account_email']
+        self.service = GAcess(service_account_email=service_account)
+
         query_result = self.service.get_top_countries()
 
         try:
@@ -109,9 +109,6 @@ class TopCountriesHandler(BaseHandler):
 
 
 class TopPagesHandler(BaseHandler):
-    def initialize(self):
-        service_account = self.settings['service_account_email']
-        self.service = GAcess(service_account_email=service_account)
 
     @cache(CACHE_EXPIRES)  # set the cache expires
     @unblock
@@ -161,6 +158,9 @@ class TopPagesHandler(BaseHandler):
 
         :return:
         """
+        service_account = self.settings['service_account_email']
+        self.service = GAcess(service_account_email=service_account)
+
         query_result = self.service.get_top_pages()
 
         try:
@@ -177,9 +177,6 @@ class TopPagesHandler(BaseHandler):
 
 
 class TopKeywordsHandler(BaseHandler):
-    def initialize(self):
-        service_account = self.settings['service_account_email']
-        self.service = GAcess(service_account_email=service_account)
 
     @cache(CACHE_EXPIRES)  # set the cache expires
     @unblock
@@ -205,6 +202,9 @@ class TopKeywordsHandler(BaseHandler):
 
         :return:
         """
+        service_account = self.settings['service_account_email']
+        self.service = GAcess(service_account_email=service_account)
+
         query_result = self.service.get_top_keywords()
 
         try:
@@ -220,9 +220,6 @@ class TopKeywordsHandler(BaseHandler):
                                       headers=headers)
 
 class TotalUsersHandler(BaseHandler):
-    def initialize(self):
-        service_account = self.settings['service_account_email']
-        self.service = GAcess(service_account_email=service_account)
 
     @cache(CACHE_EXPIRES)  # set the cache expires
     @unblock
@@ -241,6 +238,9 @@ class TotalUsersHandler(BaseHandler):
 
         :return:
         """
+        service_account = self.settings['service_account_email']
+        self.service = GAcess(service_account_email=service_account)
+
         query_result = self.service.get_users()
         try:
             data = query_result['rows']
@@ -255,9 +255,6 @@ class TotalUsersHandler(BaseHandler):
                                       headers=headers)
 
 class ReferrersHandler(BaseHandler):
-    def initialize(self):
-        service_account = self.settings['service_account_email']
-        self.service = GAcess(service_account_email=service_account)
 
     @cache(CACHE_EXPIRES)  # set the cache expires
     @unblock
@@ -304,6 +301,9 @@ class ReferrersHandler(BaseHandler):
           ],
         :return:
         """
+        service_account = self.settings['service_account_email']
+        self.service = GAcess(service_account_email=service_account)
+
         query_result = self.service.get_referrers()
         try:
             data = query_result['rows']
@@ -323,9 +323,6 @@ class ReferrersHandler(BaseHandler):
 
 
 class TopBrowserAndOs(BaseHandler):
-    def initialize(self):
-        service_account = self.settings['service_account_email']
-        self.service = GAcess(service_account_email=service_account)
 
     @cache(CACHE_EXPIRES)  # set the cache expires
     @unblock
@@ -363,6 +360,9 @@ class TopBrowserAndOs(BaseHandler):
               }
         :return:
         """
+        service_account = self.settings['service_account_email']
+        self.service = GAcess(service_account_email=service_account)
+
         query_result = self.service.get_top_browsers_n_os()
         try:
             data = query_result['rows']
