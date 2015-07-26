@@ -26,11 +26,16 @@
         <div class="col-md-6">
             <div id="toppages"></div>
         </div>
+
+        
         <div class="col-md-4">
             <div id="topkeywords"></div>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-4">
             <div id="referrers"></div>
+        </div>
+        <div class="col-md-4">
+            <div id="browsers-os"></div>
         </div>
     </div>
 </section>
@@ -38,23 +43,23 @@
 {% end body %}
 {% block endjs %}
 
-<script>
-    function loaddiv(container_div, href) {
-        $.ajax({
-            url: href,
-            type: 'GET',
-            success: function (data) {
-                $(container_div).html($(data).find('#IDofDivToFind'));
-            }
-        });
-    }
-    loaddiv('#peoplesources', '/people-sources');
-    loaddiv('#topcountries', '/top-countries');
-    loaddiv('#toppages', '/top-pages');
-    loaddiv('#topkeywords', '/top-keywords');
-    loaddiv('#totalusers', '/total-users');
-    loaddiv('#referrers', '/referrers')
 
+
+<script>
+    $('#peoplesources').load('/people-sources #data-box');
+
+    $('#topcountries').load('/top-countries #data-box');
+
+    $('#toppages').load('/top-pages #data-box');
+
+    $('#topkeywords').load('/top-keywords #data-box');
+
+    $('#totalusers').load('/total-users #data-box');
+
+    $('#referrers').load('/referrers #data-box');
+
+    $('#browsers-os').load('/top-browser-n-os');
 </script>
+
 
 {% end endjs %}
