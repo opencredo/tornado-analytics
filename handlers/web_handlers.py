@@ -56,7 +56,7 @@ class PeopleSourcesHandler(BaseHandler):
             self.set_status(400, reason='Failed to fetch people source data')
         else:
             table_title = 'How did people found your pages?'
-            headers = ['Source', 'Medium', 'Sessions', 'Page views', 'Duration']
+            headers = ['Source', 'Medium', 'Sessions', 'Page views', 'Duration (seconds)']
             return self.render_string('webhandler/data_table.html',
                                       data=data,
                                       table_title=table_title,
