@@ -25,6 +25,9 @@
         <div class="col-md-6">
             <div id="toppages"></div>
         </div>
+        <div class="col-md-4">
+            <div id="topkeywords"></div>
+        </div>
     </div>
 </section>
 
@@ -40,6 +43,9 @@
 </script>
 <script>
     $('#toppages').load('/top-pages #data-box');
+</script>
+<script>
+    $('#topkeywords').load('/top-keywords #data-box');
 </script>
 
 {% end endjs %}

@@ -97,7 +97,7 @@ class TopCountriesHandler(BaseHandler):
         except KeyError:
             self.set_status(400, reason='Failed to fetch top countries data')
         else:
-            table_title = 'Where do your readers live??'
+            table_title = 'Where do your readers live?'
             headers = ['Country', 'Users']
             return self.render_string('webhandler/data_table.html',
                                       data=data,
@@ -162,10 +162,53 @@ class TopPagesHandler(BaseHandler):
         try:
             data = query_result['rows']
         except KeyError:
-            self.set_status(400, reason='Failed to fetch top countries data')
+            self.set_status(400, reason='Failed to fetch top pages data')
         else:
             table_title = 'Which posts are most popular?'
             headers = ['Path', 'Page views', 'Unique views', 'Time on page', 'Bounces', 'Ent.', 'Exits']
+            return self.render_string('webhandler/data_table.html',
+                                      data=data,
+                                      table_title=table_title,
+                                      headers=headers)
+
+
+class TopKeywordsHandler(BaseHandler):
+    def initialize(self):
+        service_account = self.settings['service_account_email']
+        self.service = GAcess(service_account_email=service_account)
+
+    @unblock
+    def get(self):
+        """
+        Returns a list of top search terms that have been used to find you
+
+        example:
+        headers:
+        [{'columnType': 'DIMENSION',
+                    'dataType': 'STRING',
+                    'name': 'ga:keyword'},
+                   {'columnType': 'METRIC',
+                    'dataType': 'INTEGER',
+                    'name': 'ga:sessions'}],
+        rows:
+        [['linkplug-angularjs-job-board-contractor-listings', '302'],
+          ['spring with cassandra', '13'],
+          ['opencredo', '5'],
+          ['https://www.opencredo.com/2015/07/08/a-deep-dive-into-angular-2-0/',
+           '4'],
+          ['0_4bba7e0c9e-e432a867c8-344988337', '3'],
+
+        :return:
+        """
+        query_result = self.service.get_top_keywords()
+
+        try:
+            data = query_result['rows']
+        except KeyError:
+            self.set_status(400, reason='Failed to fetch top keywords data')
+        else:
+            table_title = 'What keywords were used to find you?'
+            headers = ['Keyword', 'Sessions']
             return self.render_string('webhandler/data_table.html',
                                       data=data,
                                       table_title=table_title,

@@ -8,4 +8,6 @@ url_patterns = [
     (r"/people-sources", web_handlers.PeopleSourcesHandler),
     (r"/top-countries", web_handlers.TopCountriesHandler),
     (r"/top-pages", web_handlers.TopPagesHandler),
+    (r"/top-keywords", web_handlers.TopKeywordsHandler),
+
 ]
