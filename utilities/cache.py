@@ -14,7 +14,7 @@ except ImportError:
 import functools
 
 
-def cache(expires=7200):
+def cache(expires=60):
     def _func(func):
         @functools.wraps(func)
         def wrapper(handler, *args, **kwargs):
@@ -103,6 +103,6 @@ class RedisCacheBackend(CacheBackend):
         self.redis.delete(key)
 
     def exists(self, key):
-        print(key)
+        print("key found:"+key)
 
         return bool(self.redis.exists(key))
