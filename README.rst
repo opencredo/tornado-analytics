@@ -1,6 +1,6 @@
-========================
+===================
 Tornado G Analytics
-========================
+===================
 
 This is a tornado application that queries Google analytics v3 API
 
@@ -18,27 +18,27 @@ Configuration
 Start the server
 ================
 
-To start the final application, just run the following fabric command::
+python run.py
 
- $ fab devserver
 
-This will tell Tornado to start the applicaton with the default port 8888. If
-you want to use another port, just type::
+Adding new tables
+=================
 
- $ fab devserver:port=8000
-
-In addition to that, see the fabfile.py Script for other parameters and comands.
-
-Using vagrant
-=============
-
-To run the server within a Vagrant VM, you need to install Vagrant 1.7.x and
-start the development server with the following command::
-
- $ fab vagrant devserver
-
-__ http://www.turbogears.com
-__ http://www.djangoproject.com
-__ http://www.tornadoweb.org
-__ http://www.mongodb.org
-__ http://code.google.com/closure
+* Define your new query in utilities/gaclient.py
+  Use https://developers.google.com/apis-explorer/#p/ to test your queries
+  You can inherit or just edit GAcess class with your additional function, it should return raw response from google
+  API.
+* Define a tornado handler in handlers/web_handlers.py. Use @unblock decorator to make calls asynchronous since
+  google API is a blocking operation (at the time of writing this application there were no non-blocking clients or
+  libraries available). This handler should return "render_to_string" since @unblock decorator writes whole response
+  and returns it to client:
+  return self.render_string('webhandler/data_table.html',
+                                      data=data,
+                                      table_title=table_title,
+                                      headers=headers)
+  here:  data - is what populates rows
+         table_title - surprisingly it names the table
+         headers - populates table headers
+* Define your handler in urls.py
+* Add your table in templates/index.html (include table's URL and create a <div> with ID so it can load your new
+  table into that div.
