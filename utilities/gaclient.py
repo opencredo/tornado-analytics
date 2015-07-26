@@ -5,7 +5,6 @@ from oauth2client.client import SignedJwtAssertionCredentials
 from pprint import pprint as pp
 import httplib2
 import os
-from concurrent.futures import ThreadPoolExecutor
 
 
 class GAcess:
@@ -211,29 +210,6 @@ class GAcess:
             sort='-ga:sessions').execute()
         print("got total users")
         return results
-
-    def get_dashboard_data(self):
-        import time
-        print("Entering function")
-        start = time.time()
-        with ThreadPoolExecutor(max_workers=100) as executor:
-            print("submiting tasks")
-            sessions_future = executor.submit(self.get_sessions_results)
-            sources_future = executor.submit(self.get_people_sources)
-
-            # getting future results
-            sessions = sessions_future.result()
-            print(sessions)
-            sources = sources_future.result()
-            print(sources)
-
-        finish_time = time.time()
-        print("Query complete in %s ms" % int((finish_time-start)*1000))
-
-        import pdb
-        pdb.set_trace()
-
-
 
 
 def main():
