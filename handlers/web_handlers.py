@@ -247,3 +247,65 @@ class TotalUsersHandler(BaseHandler):
                                       data=data,
                                       table_title=table_title,
                                       headers=headers)
+
+class ReferrersHandler(BaseHandler):
+    def initialize(self):
+        service_account = self.settings['service_account_email']
+        self.service = GAcess(service_account_email=service_account)
+
+    @unblock
+    def get(self):
+        """
+        Returns your referrers list
+
+        example:
+        headers:
+        [
+          {
+           "name": "ga:fullReferrer",
+           "columnType": "DIMENSION",
+           "dataType": "STRING"
+          },
+          {
+           "name": "ga:users",
+           "columnType": "METRIC",
+           "dataType": "INTEGER"
+          },
+          {
+           "name": "ga:bounces",
+           "columnType": "METRIC",
+           "dataType": "INTEGER"
+          }
+         ],
+
+        rows:
+        [
+          [
+           "linkplug",
+           "216",
+           "273"
+          ],
+          [
+           "4webmasters.org/",
+           "189",
+           "194"
+          ],
+          [
+           "reddit.com/",
+           "152",
+           "173"
+          ],
+        :return:
+        """
+        query_result = self.service.get_referrers()
+        try:
+            data = query_result['rows']
+        except KeyError:
+            self.set_status(400, reason='Failed to fetch referrers data')
+        else:
+            table_title = 'Who is linking to you?'
+            headers = ['Full referrer', 'Users', 'Bounces']
+            return self.render_string('webhandler/data_table.html',
+                                      data=data,
+                                      table_title=table_title,
+                                      headers=headers)
