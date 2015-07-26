@@ -4,6 +4,9 @@ from googleapiclient.discovery import build
 from oauth2client.client import SignedJwtAssertionCredentials
 import httplib2
 import os
+from oauth2client.file import Storage
+from oauth2client.tools import run
+from oauth2client import tools
 
 
 class GAcess:
@@ -38,12 +41,21 @@ class GAcess:
         Returns:
           A service that is connected to the specified API.
         """
-        f = open(key_file_location, 'rb')
-        key = f.read()
-        f.close()
+        # reusing saved credentials
+        storage = Storage("ta_saved_credentials.dat")
+        http = httplib2.Http()
 
-        credentials = SignedJwtAssertionCredentials(service_account_email, key,
-                                                    scope=scope)
+        credentials = storage.get()
+        if credentials is None or credentials.invalid:
+            print("credentials not found, authorizing")
+            f = open(key_file_location, 'rb')
+            key = f.read()
+            f.close()
+            credentials = SignedJwtAssertionCredentials(service_account_email, key, scope=scope)
+            storage.put(credentials)
+        else:
+            print("credentials found")
+            credentials.refresh(http)
 
         http = credentials.authorize(httplib2.Http())
 
