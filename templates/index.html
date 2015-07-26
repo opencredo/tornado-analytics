@@ -39,23 +39,22 @@
 {% block endjs %}
 
 <script>
-    $('#peoplesources').load('/people-sources #data-box');
+    function loaddiv(container_div, href) {
+        $.ajax({
+            url: href,
+            type: 'GET',
+            success: function (data) {
+                $(container_div).html($(data).find('#IDofDivToFind'));
+            }
+        });
+    }
+    loaddiv('#peoplesources', '/people-sources');
+    loaddiv('#topcountries', '/top-countries');
+    loaddiv('#toppages', '/top-pages');
+    loaddiv('#topkeywords', '/top-keywords');
+    loaddiv('#totalusers', '/total-users');
+    loaddiv('#referrers', '/referrers')
 
-</script>
-<script>
-    $('#topcountries').load('/top-countries #data-box');
-</script>
-<script>
-    $('#toppages').load('/top-pages #data-box');
-</script>
-<script>
-    $('#topkeywords').load('/top-keywords #data-box');
-</script>
-<script>
-    $('#totalusers').load('/total-users #data-box');
-</script>
-<script>
-    $('#referrers').load('/referrers #data-box');
 </script>
 
 {% end endjs %}

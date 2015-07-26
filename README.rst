@@ -42,5 +42,5 @@ Adding new tables
          table_title - surprisingly it names the table
          headers - populates table headers
 * Define your handler in urls.py
-* Add your table in templates/index.html (include table's URL and create a <div> with ID so it can load your new
-  table into that div.
+* Add your table div in templates/index.html, then, in js section add loading div function all:
+  loaddiv('#__your_created_div', '/your-new-url-to-data-table');
