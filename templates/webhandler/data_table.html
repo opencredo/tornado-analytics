@@ -1,16 +1,17 @@
-<div id="top-countries" class="box">
+<div id="data-box" class="box">
     <div class="box-header with-border">
-        <h3 class="box-title">Where do your readers live?</h3>
+        <h3 class="box-title">{{ table_title }}</h3>
     </div><!-- /.box-header -->
     <div class="box-body">
         <table class="table table-bordered">
             <tbody><tr>
-                <th> Country </th>
-                <th> Users </th>
+                {% for header in headers %}
+                  <th> {{ header }}</th>
+                {% end %}
             </tr>
             {% for row in data %}
             <tr>
-               {% for value in row %}
+                {% for value in row %}
                 <td>{{ value }}</td>
                 {% end %}
             </tr>

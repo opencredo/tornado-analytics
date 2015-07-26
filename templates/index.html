@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}A sample index page{% end %}
+{% block title %}Dashboard{% end %}
 
 {% block body %}
 <section class="content-header">
@@ -29,8 +29,11 @@
 {% block endjs %}
 
 <script>
-    $('#peoplesources').load('/people-sources #peoplesources');
-    $('#topcountries').load('/top-countries #top-countries');
+    $('#peoplesources').load('/people-sources #data-box');
+
+</script>
+<script>
+    $('#topcountries').load('/top-countries #data-box');
 </script>
 
 {% end endjs %}

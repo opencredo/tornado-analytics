@@ -53,7 +53,12 @@ class PeopleSourcesHandler(BaseHandler):
         except KeyError:
             self.set_status(400, reason='Failed to fetch people source data')
         else:
-            return self.render_string('webhandler/people_sources.html', data=data)
+            table_title = 'How did people found your pages?'
+            headers = ['Source', 'Medium', 'Sessions', 'Page views', 'Duration']
+            return self.render_string('webhandler/data_table.html',
+                                      data=data,
+                                      table_title=table_title,
+                                      headers=headers)
 
 
 class TopCountriesHandler(BaseHandler):
@@ -89,8 +94,12 @@ class TopCountriesHandler(BaseHandler):
 
         try:
             data = query_result['rows']
-            profile = query_result['profileInfo']
         except KeyError:
             self.set_status(400, reason='Failed to fetch top countries data')
         else:
-            return self.render_string('webhandler/top_countries.html', data=data, profile=profile)
+            table_title = 'Where do your readers live??'
+            headers = ['Country', 'Users']
+            return self.render_string('webhandler/data_table.html',
+                                      data=data,
+                                      table_title=table_title,
+                                      headers=headers)
