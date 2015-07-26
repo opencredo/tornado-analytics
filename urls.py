@@ -9,5 +9,6 @@ url_patterns = [
     (r"/top-countries", web_handlers.TopCountriesHandler),
     (r"/top-pages", web_handlers.TopPagesHandler),
     (r"/top-keywords", web_handlers.TopKeywordsHandler),
+    (r"/total-users", web_handlers.TotalUsersHandler),
 
 ]

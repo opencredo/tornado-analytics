@@ -213,3 +213,37 @@ class TopKeywordsHandler(BaseHandler):
                                       data=data,
                                       table_title=table_title,
                                       headers=headers)
+
+class TotalUsersHandler(BaseHandler):
+    def initialize(self):
+        service_account = self.settings['service_account_email']
+        self.service = GAcess(service_account_email=service_account)
+
+    @unblock
+    def get(self):
+        """
+        Returns total amount of people that are reading your posts
+
+        example:
+        headers:
+        [{'columnType': 'METRIC',
+                    'dataType': 'INTEGER',
+                    'name': 'ga:users'}],
+
+        rows:
+        [['11135']],
+
+        :return:
+        """
+        query_result = self.service.get_users()
+        try:
+            data = query_result['rows']
+        except KeyError:
+            self.set_status(400, reason='Failed to fetch total users data')
+        else:
+            table_title = 'How many people are reading your posts?'
+            headers = ['']
+            return self.render_string('webhandler/data_table.html',
+                                      data=data,
+                                      table_title=table_title,
+                                      headers=headers)
