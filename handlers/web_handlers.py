@@ -46,21 +46,26 @@ class PeopleSourcesHandler(BaseHandler):
 
         :return:
         """
-        service_account = self.settings['service_account_email']
-        self.service = GAcess(service_account_email=service_account)
-
-        query_result = self.service.get_people_sources()
         try:
-            data = query_result['rows']
-        except KeyError:
-            self.set_status(400, reason='Failed to fetch people source data')
-        else:
-            table_title = 'How did people found your pages?'
-            headers = ['Source', 'Medium', 'Sessions', 'Page views', 'Duration (seconds)']
-            return self.render_string('webhandler/data_table.html',
-                                      data=data,
-                                      table_title=table_title,
-                                      headers=headers)
+            service_account = self.settings['service_account_email']
+            self.service = GAcess(service_account_email=service_account)
+
+            query_result = self.service.get_people_sources()
+            try:
+                data = query_result['rows']
+            except KeyError:
+                self.set_status(400, reason='Failed to fetch people source data')
+            else:
+                table_title = 'How did people found your pages?'
+                headers = ['Source', 'Medium', 'Sessions', 'Page views', 'Duration (seconds)']
+                return self.render_string('webhandler/data_table.html',
+                                          data=data,
+                                          table_title=table_title,
+                                          headers=headers)
+        except Exception as ex:
+            self.set_status(400)
+            return self.render_string('error.html',
+                                      error=ex)
 
 
 class TopCountriesHandler(BaseHandler):
@@ -90,23 +95,27 @@ class TopCountriesHandler(BaseHandler):
 
         :return:
         """
-        service_account = self.settings['service_account_email']
-        self.service = GAcess(service_account_email=service_account)
-
-        query_result = self.service.get_top_countries()
-
         try:
-            data = query_result['rows']
-        except KeyError:
-            self.set_status(400, reason='Failed to fetch top countries data')
-        else:
-            table_title = 'Where do your readers live?'
-            headers = ['Country', 'Users']
-            return self.render_string('webhandler/data_table.html',
-                                      data=data,
-                                      table_title=table_title,
-                                      headers=headers)
+            service_account = self.settings['service_account_email']
+            self.service = GAcess(service_account_email=service_account)
 
+            query_result = self.service.get_top_countries()
+
+            try:
+                data = query_result['rows']
+            except KeyError:
+                self.set_status(400, reason='Failed to fetch top countries data')
+            else:
+                table_title = 'Where do your readers live?'
+                headers = ['Country', 'Users']
+                return self.render_string('webhandler/data_table.html',
+                                          data=data,
+                                          table_title=table_title,
+                                          headers=headers)
+        except Exception as ex:
+            self.set_status(400)
+            return self.render_string('error.html',
+                                      error=ex)
 
 class TopPagesHandler(BaseHandler):
 
@@ -158,22 +167,27 @@ class TopPagesHandler(BaseHandler):
 
         :return:
         """
-        service_account = self.settings['service_account_email']
-        self.service = GAcess(service_account_email=service_account)
-
-        query_result = self.service.get_top_pages()
-
         try:
-            data = query_result['rows']
-        except KeyError:
-            self.set_status(400, reason='Failed to fetch top pages data')
-        else:
-            table_title = 'Which posts are most popular?'
-            headers = ['Path', 'Page views', 'Unique views', 'Time on page', 'Bounces', 'Ent.', 'Exits']
-            return self.render_string('webhandler/data_table.html',
-                                      data=data,
-                                      table_title=table_title,
-                                      headers=headers)
+            service_account = self.settings['service_account_email']
+            self.service = GAcess(service_account_email=service_account)
+
+            query_result = self.service.get_top_pages()
+
+            try:
+                data = query_result['rows']
+            except KeyError:
+                self.set_status(400, reason='Failed to fetch top pages data')
+            else:
+                table_title = 'Which posts are most popular?'
+                headers = ['Path', 'Page views', 'Unique views', 'Time on page', 'Bounces', 'Ent.', 'Exits']
+                return self.render_string('webhandler/data_table.html',
+                                          data=data,
+                                          table_title=table_title,
+                                          headers=headers)
+        except Exception as ex:
+            self.set_status(400)
+            return self.render_string('error.html',
+                                      error=ex)
 
 
 class TopKeywordsHandler(BaseHandler):
@@ -202,22 +216,27 @@ class TopKeywordsHandler(BaseHandler):
 
         :return:
         """
-        service_account = self.settings['service_account_email']
-        self.service = GAcess(service_account_email=service_account)
-
-        query_result = self.service.get_top_keywords()
-
         try:
-            data = query_result['rows']
-        except KeyError:
-            self.set_status(400, reason='Failed to fetch top keywords data')
-        else:
-            table_title = 'What keywords were used to find you?'
-            headers = ['Keyword', 'Sessions']
-            return self.render_string('webhandler/data_table.html',
-                                      data=data,
-                                      table_title=table_title,
-                                      headers=headers)
+            service_account = self.settings['service_account_email']
+            self.service = GAcess(service_account_email=service_account)
+
+            query_result = self.service.get_top_keywords()
+
+            try:
+                data = query_result['rows']
+            except KeyError:
+                self.set_status(400, reason='Failed to fetch top keywords data')
+            else:
+                table_title = 'What keywords were used to find you?'
+                headers = ['Keyword', 'Sessions']
+                return self.render_string('webhandler/data_table.html',
+                                          data=data,
+                                          table_title=table_title,
+                                          headers=headers)
+        except Exception as ex:
+            self.set_status(400)
+            return self.render_string('error.html',
+                                      error=ex)
 
 class TotalUsersHandler(BaseHandler):
 
@@ -238,21 +257,26 @@ class TotalUsersHandler(BaseHandler):
 
         :return:
         """
-        service_account = self.settings['service_account_email']
-        self.service = GAcess(service_account_email=service_account)
-
-        query_result = self.service.get_users()
         try:
-            data = query_result['rows']
-        except KeyError:
-            self.set_status(400, reason='Failed to fetch total users data')
-        else:
-            table_title = 'How many people are reading your posts?'
-            headers = ['']
-            return self.render_string('webhandler/data_table.html',
-                                      data=data,
-                                      table_title=table_title,
-                                      headers=headers)
+            service_account = self.settings['service_account_email']
+            self.service = GAcess(service_account_email=service_account)
+
+            query_result = self.service.get_users()
+            try:
+                data = query_result['rows']
+            except KeyError:
+                self.set_status(400, reason='Failed to fetch total users data')
+            else:
+                table_title = 'How many people are reading your posts?'
+                headers = ['']
+                return self.render_string('webhandler/data_table.html',
+                                          data=data,
+                                          table_title=table_title,
+                                          headers=headers)
+        except Exception as ex:
+            self.set_status(400)
+            return self.render_string('error.html',
+                                      error=ex)
 
 class ReferrersHandler(BaseHandler):
 
@@ -301,25 +325,30 @@ class ReferrersHandler(BaseHandler):
           ],
         :return:
         """
-        service_account = self.settings['service_account_email']
-        self.service = GAcess(service_account_email=service_account)
-
-        query_result = self.service.get_referrers()
         try:
-            data = query_result['rows']
-        except KeyError:
-            self.set_status(400, reason='Failed to fetch referrers data')
-        else:
-            # formatting decimal values to percentage
-            for row in data:
-                row[2] = ("%.2f" % float(row[2])) + "%"
+            service_account = self.settings['service_account_email']
+            self.service = GAcess(service_account_email=service_account)
 
-            table_title = 'Who is linking to you?'
-            headers = ['Full referrer', 'Users', 'Bounces']
-            return self.render_string('webhandler/data_table.html',
-                                      data=data,
-                                      table_title=table_title,
-                                      headers=headers)
+            query_result = self.service.get_referrers()
+            try:
+                data = query_result['rows']
+            except KeyError:
+                self.set_status(400, reason='Failed to fetch referrers data')
+            else:
+                # formatting decimal values to percentage
+                for row in data:
+                    row[2] = ("%.2f" % float(row[2])) + "%"
+
+                table_title = 'Who is linking to you?'
+                headers = ['Full referrer', 'Users', 'Bounces']
+                return self.render_string('webhandler/data_table.html',
+                                          data=data,
+                                          table_title=table_title,
+                                          headers=headers)
+        except Exception as ex:
+            self.set_status(400)
+            return self.render_string('error.html',
+                                      error=ex)
 
 
 class TopBrowserAndOs(BaseHandler):
@@ -360,19 +389,24 @@ class TopBrowserAndOs(BaseHandler):
               }
         :return:
         """
-        service_account = self.settings['service_account_email']
-        self.service = GAcess(service_account_email=service_account)
-
-        query_result = self.service.get_top_browsers_n_os()
         try:
-            data = query_result['rows']
-        except KeyError:
-            self.set_status(400, reason='Failed to fetch referrers data')
-        else:
+            service_account = self.settings['service_account_email']
+            self.service = GAcess(service_account_email=service_account)
 
-            table_title = 'What browser and OS your readers use?'
-            headers = ['OS', 'Version', 'Browser', 'Browser version', 'Sessions']
-            return self.render_string('webhandler/data_table.html',
-                                      data=data,
-                                      table_title=table_title,
-                                      headers=headers)
+            query_result = self.service.get_top_browsers_n_os()
+            try:
+                data = query_result['rows']
+            except KeyError:
+                self.set_status(400, reason='Failed to fetch referrers data')
+            else:
+
+                table_title = 'What browser and OS your readers use?'
+                headers = ['OS', 'Version', 'Browser', 'Browser version', 'Sessions']
+                return self.render_string('webhandler/data_table.html',
+                                          data=data,
+                                          table_title=table_title,
+                                          headers=headers)
+        except Exception as ex:
+            self.set_status(400)
+            return self.render_string('error.html',
+                                      error=ex)
