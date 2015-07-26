@@ -31,7 +31,7 @@ class CacheMixin(object):
     def prepare(self):
         super(CacheMixin, self).prepare()
         key = self._generate_key(self.request)
-        print(key)
+        print("preparing " + self.request.path+ ": "+key)
         if self.cache.exists(self._prefix(key)):
             rv = pickle.loads(self.cache.get(self._prefix(key)))
             self.write_cache(rv)
@@ -48,13 +48,16 @@ class CacheMixin(object):
         super(CacheMixin, self).write(chunk)
 
     def write(self, chunk):
-        pickled = pickle.dumps(chunk)
-        key = self._generate_key(self.request)
-        if hasattr(self, "expires"):
-            self.cache.set(self._prefix(key), pickled, self.expires)
-        else:
-            self.cache.set(self._prefix(key), pickled)
-        super(CacheMixin, self).write(chunk)
+        # do not cache errors
+        if self._status_code in [200, 304]:
+            print("writing cache")
+            pickled = pickle.dumps(chunk)
+            key = self._generate_key(self.request)
+            if hasattr(self, "expires"):
+                self.cache.set(self._prefix(key), pickled, self.expires)
+            else:
+                self.cache.set(self._prefix(key), pickled)
+            super(CacheMixin, self).write(chunk)
 
 
 class CacheBackend(object):
@@ -101,6 +104,4 @@ class RedisCacheBackend(CacheBackend):
         self.redis.delete(key)
 
     def exists(self, key):
-        print("key found: " + key)
-
         return bool(self.redis.exists(key))
