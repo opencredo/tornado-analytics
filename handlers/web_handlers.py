@@ -303,6 +303,10 @@ class ReferrersHandler(BaseHandler):
         except KeyError:
             self.set_status(400, reason='Failed to fetch referrers data')
         else:
+            # formatting decimal values to percentage
+            for row in data:
+                row[2] = ("%.2f" % float(row[2])) + "%"
+
             table_title = 'Who is linking to you?'
             headers = ['Full referrer', 'Users', 'Bounces']
             return self.render_string('webhandler/data_table.html',
