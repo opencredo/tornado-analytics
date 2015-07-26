@@ -16,8 +16,12 @@
 <section class="content">
     <!-- Small boxes (Stat box) -->
     <div class="row">
-        <div id="peoplesources"></div>
-
+        <div class="col-md-4">
+            <div id="peoplesources"></div>
+        </div>
+        <div class="col-md-3">
+            <div id="topcountries"></div>
+        </div>
     </div>
 </section>
 
@@ -25,7 +29,8 @@
 {% block endjs %}
 
 <script>
-    $('#peoplesources').load('/people-sources #ppl_sources');
+    $('#peoplesources').load('/people-sources #peoplesources');
+    $('#topcountries').load('/top-countries #top-countries');
 </script>
 
 {% end endjs %}
