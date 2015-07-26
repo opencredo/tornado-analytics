@@ -4,6 +4,7 @@ import os.path
 
 from tornado.options import define
 
+SERVICE_ACCOUNT = '***REMOVED***'
 
 define("port", default=8888, help="run on the given port", type=int)
 define("config", default=None, help="tornado config file")
@@ -17,4 +18,4 @@ settings["login_url"] = "/login"
 settings["static_path"] = os.path.join(os.path.dirname(__file__), "static")
 settings["template_path"] = os.path.join(os.path.dirname(__file__), "templates")
 settings["xsrf_cookies"] = False
-settings["service_account_email"] = '***REMOVED***'
+settings["service_account_email"] = SERVICE_ACCOUNT

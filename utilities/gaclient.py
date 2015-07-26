@@ -2,15 +2,22 @@
 
 from googleapiclient.discovery import build
 from oauth2client.client import SignedJwtAssertionCredentials
-from pprint import pprint as pp
 import httplib2
 import os
 
 
 class GAcess:
-
     def __init__(self, scope=['https://www.googleapis.com/auth/analytics.readonly'], key_file_location=None,
                  service_account_email=None):
+        """
+        The google-api-python-client library is built on top of the httplib2 library, which is not thread-safe.
+        Therefore, if you are running as a multi-threaded application, each thread that you are
+        making requests from must have its own instance of httplib2.Http().
+
+        :param scope:
+        :param key_file_location:
+        :param service_account_email:
+        """
         if key_file_location is None:
             key_file_location = os.path.dirname(os.path.realpath(__file__)) + '/' + 'client_secrets.p12'
         # getting service object
@@ -143,7 +150,7 @@ class GAcess:
         print("got countries")
         return results
 
-    def get_users(self,  profile_id=None, days=30):
+    def get_users(self, profile_id=None, days=30):
         """
         Gets total unique users that are reading your posts
 
@@ -186,7 +193,7 @@ class GAcess:
         print("got top pages")
         return results
 
-    def get_top_keywords(self,profile_id=None, days=30, max_results=10):
+    def get_top_keywords(self, profile_id=None, days=30, max_results=10):
         """
         Which search terms are used to find you?
 
@@ -208,7 +215,7 @@ class GAcess:
             filters='ga:keyword!@(not',
             max_results=max_results,
             sort='-ga:sessions').execute()
-        print("got total users")
+        print("got top keywords")
         return results
 
     def get_referrers(self, profile_id=None, days=30, max_results=10):
@@ -233,10 +240,19 @@ class GAcess:
             filters='ga:fullReferrer!@google;ga:fullReferrer!@(direct)',
             max_results=max_results,
             sort='-ga:users').execute()
+        print("got top referrers")
         return results
 
 
 def main():
+
+    """
+    This function is meant for testing. Add client_secrets to your utilities directory (next to gaclient.py) and type
+    in your console (when in project root) "python utilities/gaclient.py" to access shell. You can manipulate
+    "sv" object to try out new queries or commands to API client. You can also override some parameters, like
+    service account, scope or key_file_location.
+
+    """
     # Define the auth scopes to request.
     scope = ['https://www.googleapis.com/auth/analytics.readonly']
 
@@ -248,7 +264,7 @@ def main():
     # key_file_location = 'utilities/client_secrets.p12'
 
     # authenticate and construct service
-    #service = GAcess(scope, key_file_location, service_account_email)
+    # service = GAcess(scope, key_file_location, service_account_email)
     sv = GAcess(service_account_email=service_account_email)
 
     # use service object to call commands (get_people_sources, etc..)
