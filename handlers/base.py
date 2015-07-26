@@ -5,14 +5,19 @@ import tornado.web
 from functools import partial, wraps
 from concurrent.futures import ThreadPoolExecutor
 
+from utilities.cache import CacheMixin
+
 import logging
 logger = logging.getLogger(__name__)
 
 
-class BaseHandler(tornado.web.RequestHandler):
+class BaseHandler(CacheMixin, tornado.web.RequestHandler):
     """A class to collect common handler methods - all other handlers should
     subclass this one.
     """
+
+    def prepare(self):
+        super(BaseHandler, self).prepare()
 
     def load_json(self):
         """Load JSON from the request body and store them in

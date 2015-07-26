@@ -15,11 +15,13 @@ setup(name='tornado-project-skeleton',
           'tornado',
           'google-api-python-client',
           'fabric',
-          'PyOpenSSL'
+          'PyOpenSSL',
+          'redis'
       ],
       tests_require=[
           'pytest>=2.6.0',
           'pytest-pep8',
           'pytest-cov',
-          'tox'
+          'tox',
+          'nose'
       ])

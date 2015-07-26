@@ -5,6 +5,8 @@ import os.path
 from tornado.options import define
 
 SERVICE_ACCOUNT = '***REMOVED***'
+# seconds
+CACHE_EXPIRES = 30
 
 define("port", default=8888, help="run on the given port", type=int)
 define("config", default=None, help="tornado config file")

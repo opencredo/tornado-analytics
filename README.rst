@@ -9,8 +9,10 @@ Installation
 
 Check out the sources and install the requirements::
 
- $ git clone git@github.com:hkage/tornado-project-skeleton.git
- $ pip install -e .
+python setup.py install
+
+Install Redis for caching or add another caching class in utilities/cache.py and inherit it in base handler
+(handlers/base.py).
 
 Configuration
 =============

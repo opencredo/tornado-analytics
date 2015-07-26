@@ -1,7 +1,7 @@
 from handlers.base import BaseHandler, unblock
 from utilities.gaclient import GAcess
-from pprint import pprint as pp
-import time
+from utilities.cache import cache
+from settings import CACHE_EXPIRES
 
 
 class MainHandler(BaseHandler):
@@ -14,6 +14,7 @@ class PeopleSourcesHandler(BaseHandler):
         service_account = self.settings['service_account_email']
         self.service = GAcess(service_account_email=service_account)
 
+    @cache(CACHE_EXPIRES)  # set the cache expires
     @unblock
     def get(self):
         """
@@ -66,6 +67,7 @@ class TopCountriesHandler(BaseHandler):
         service_account = self.settings['service_account_email']
         self.service = GAcess(service_account_email=service_account)
 
+    @cache(CACHE_EXPIRES)  # set the cache expires
     @unblock
     def get(self):
         """
@@ -110,6 +112,7 @@ class TopPagesHandler(BaseHandler):
         service_account = self.settings['service_account_email']
         self.service = GAcess(service_account_email=service_account)
 
+    @cache(CACHE_EXPIRES)  # set the cache expires
     @unblock
     def get(self):
         """
@@ -146,7 +149,7 @@ class TopPagesHandler(BaseHandler):
            '3741',
            '4012',
            '3993'],
-          ['/', '1892', '1689', '36065.0', '1095', '1590', '1191'],
+          ['/', '1892', '1689', '3CACHE_EXPIRES65.0', '1095', '1590', '1191'],
           ['/2014/02/24/experiences-with-spring-boot/',
            '1166',
            '1133',
@@ -177,6 +180,7 @@ class TopKeywordsHandler(BaseHandler):
         service_account = self.settings['service_account_email']
         self.service = GAcess(service_account_email=service_account)
 
+    @cache(CACHE_EXPIRES)  # set the cache expires
     @unblock
     def get(self):
         """
@@ -219,6 +223,7 @@ class TotalUsersHandler(BaseHandler):
         service_account = self.settings['service_account_email']
         self.service = GAcess(service_account_email=service_account)
 
+    @cache(CACHE_EXPIRES)  # set the cache expires
     @unblock
     def get(self):
         """
@@ -253,6 +258,7 @@ class ReferrersHandler(BaseHandler):
         service_account = self.settings['service_account_email']
         self.service = GAcess(service_account_email=service_account)
 
+    @cache(CACHE_EXPIRES)  # set the cache expires
     @unblock
     def get(self):
         """

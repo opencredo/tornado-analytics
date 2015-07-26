@@ -1,19 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-#import os.path
-#import wsgiref.handlers
-
-#import tornado.auth
 import tornado.httpserver
 import tornado.ioloop
 import tornado.options
 import tornado.web
 import tornado.autoreload
-#from tornado.options import define, options
+
 from tornado.options import options
 import tornado.web
-#import tornado.wsgi
+from utilities.cache import RedisCacheBackend
+import redis
 
 from settings import settings
 from urls import url_patterns
@@ -21,6 +18,9 @@ from urls import url_patterns
 
 class TornadoApplication(tornado.web.Application):
     def __init__(self):
+        self.redis = redis.Redis()
+        self.cache = RedisCacheBackend(self.redis)
+
         tornado.web.Application.__init__(self, url_patterns, **settings)
 
 
