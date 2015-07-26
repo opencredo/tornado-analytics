@@ -1,12 +1,16 @@
 <div id="data-box" class="box">
     <div class="box-header with-border">
         <h3 class="box-title">{{ table_title }}</h3>
-    </div><!-- /.box-header -->
+    </div>
+    <!-- /.box-header -->
     <div class="box-body">
         <table class="table table-condensed table-bordered">
-            <tbody><tr>
+            <tbody>
+            <tr>
                 {% for header in headers %}
-                  <th> {{ header }}</th>
+                    {% if header != '' %}
+                        <th> {{ header }}</th>
+                    {% end %}
                 {% end %}
             </tr>
             {% for row in data %}
@@ -17,6 +21,8 @@
             </tr>
             {% end %}
 
-            </tbody></table>
-    </div><!-- /.box-body -->
+            </tbody>
+        </table>
+    </div>
+    <!-- /.box-body -->
 </div>
