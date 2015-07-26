@@ -19,8 +19,11 @@
         <div class="col-md-4">
             <div id="peoplesources"></div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <div id="topcountries"></div>
+        </div>
+        <div class="col-md-6">
+            <div id="toppages"></div>
         </div>
     </div>
 </section>
@@ -34,6 +37,9 @@
 </script>
 <script>
     $('#topcountries').load('/top-countries #data-box');
+</script>
+<script>
+    $('#toppages').load('/top-pages #data-box');
 </script>
 
 {% end endjs %}
