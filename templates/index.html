@@ -46,19 +46,26 @@
 
 
 <script>
-    $('#peoplesources').load('/people-sources #data-box');
+    $(document).ready(function() {
+        function loadFeed() {
+            console.log("Loading data...");
+            $('#peoplesources').load('/people-sources #data-box');
 
-    $('#topcountries').load('/top-countries #data-box');
+            $('#topcountries').load('/top-countries #data-box');
 
-    $('#toppages').load('/top-pages #data-box');
+            $('#toppages').load('/top-pages #data-box');
 
-    $('#topkeywords').load('/top-keywords #data-box');
+            $('#topkeywords').load('/top-keywords #data-box');
 
-    $('#totalusers').load('/total-users #data-box');
+            $('#totalusers').load('/total-users #data-box');
 
-    $('#referrers').load('/referrers #data-box');
+            $('#referrers').load('/referrers #data-box');
 
-    $('#browsers-os').load('/top-browser-n-os');
+{#            $('#browsers-os').load('/top-browser-n-os');#}
+        }
+        loadFeed();
+        setInterval(loadFeed, 300 * 1e3); // every 5 minutes [300 seconds]
+    });
 </script>
 
 
