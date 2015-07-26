@@ -5,6 +5,7 @@ from settings import CACHE_EXPIRES
 
 
 class MainHandler(BaseHandler):
+    @cache(1)
     def get(self):
         self.render('index.html')
 
@@ -315,6 +316,62 @@ class ReferrersHandler(BaseHandler):
 
             table_title = 'Who is linking to you?'
             headers = ['Full referrer', 'Users', 'Bounces']
+            return self.render_string('webhandler/data_table.html',
+                                      data=data,
+                                      table_title=table_title,
+                                      headers=headers)
+
+
+class TopBrowserAndOs(BaseHandler):
+    def initialize(self):
+        service_account = self.settings['service_account_email']
+        self.service = GAcess(service_account_email=service_account)
+
+    @cache(CACHE_EXPIRES)  # set the cache expires
+    @unblock
+    def get(self):
+        """
+        Returns your users top browsers and operating systems
+
+        example:
+        headers:
+        "columnHeaders": [
+              {
+               "name": "ga:operatingSystem",
+               "columnType": "DIMENSION",
+               "dataType": "STRING"
+              },
+              {
+               "name": "ga:operatingSystemVersion",
+               "columnType": "DIMENSION",
+               "dataType": "STRING"
+              },
+              {
+               "name": "ga:browser",
+               "columnType": "DIMENSION",
+               "dataType": "STRING"
+              },
+              {
+               "name": "ga:browserVersion",
+               "columnType": "DIMENSION",
+               "dataType": "STRING"
+              },
+              {
+               "name": "ga:sessions",
+               "columnType": "METRIC",
+               "dataType": "INTEGER"
+              }
+        :return:
+        """
+        query_result = self.service.get_top_browsers_n_os()
+        try:
+            data = query_result['rows']
+        except KeyError:
+            self.set_status(400, reason='Failed to fetch referrers data')
+        else:
+
+            table_title = 'What browser and OS your readers use?'
+            headers = ['OS', 'Version', 'Browser', 'Browser version', 'Sessions']
             return self.render_string('webhandler/data_table.html',
                                       data=data,
                                       table_title=table_title,

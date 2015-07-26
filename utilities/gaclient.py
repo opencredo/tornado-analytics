@@ -243,6 +243,29 @@ class GAcess:
         print("got top referrers")
         return results
 
+    def get_top_browsers_n_os(self, profile_id=None, days=30, max_results=10):
+        """
+        Who is referring to your site?
+
+        :param profile_id:
+        :param days:
+        :param max_results:
+        :return:
+        """
+        # getting profile ID
+        if profile_id is None:
+            profile_id = self.get_first_profile_id()
+
+        results = self.service.data().ga().get(
+            ids='ga:' + profile_id,
+            start_date='%sdaysAgo' % days,
+            end_date='today',
+            metrics='ga:sessions',
+            dimensions='ga:operatingSystem,ga:operatingSystemVersion,ga:browser,ga:browserVersion',
+            max_results=max_results,
+            sort='-ga:sessions').execute()
+        print("got top browsers and os")
+        return results
 
 def main():
 

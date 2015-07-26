@@ -11,5 +11,6 @@ url_patterns = [
     (r"/top-keywords", web_handlers.TopKeywordsHandler),
     (r"/total-users", web_handlers.TotalUsersHandler),
     (r"/referrers", web_handlers.ReferrersHandler),
+    (r"/top-browser-n-os", web_handlers.TopBrowserAndOs),
 
 ]
