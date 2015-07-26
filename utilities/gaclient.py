@@ -211,6 +211,30 @@ class GAcess:
         print("got total users")
         return results
 
+    def get_referrers(self, profile_id=None, days=30, max_results=10):
+        """
+        Who is referring to your site?
+
+        :param profile_id:
+        :param days:
+        :param max_results:
+        :return:
+        """
+        # getting profile ID
+        if profile_id is None:
+            profile_id = self.get_first_profile_id()
+
+        results = self.service.data().ga().get(
+            ids='ga:' + profile_id,
+            start_date='%sdaysAgo' % days,
+            end_date='today',
+            metrics='ga:users,ga:bounceRate',
+            dimensions='ga:fullReferrer',
+            filters='ga:fullReferrer!@google;ga:fullReferrer!@(direct)',
+            max_results=max_results,
+            sort='-ga:users').execute()
+        return results
+
 
 def main():
     # Define the auth scopes to request.
