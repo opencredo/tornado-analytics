@@ -17,6 +17,11 @@ Install Redis for caching or add another caching class in utilities/cache.py and
 Configuration
 =============
 
+Configure additional requests/second for your project in google developer console:
+https://developers.google.com/analytics/devguides/reporting/mcf/v3/limits-quotas
+
+Set Per-user limit to more than 1.
+
 Start the server
 ================
 

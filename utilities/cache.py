@@ -1,10 +1,8 @@
 __author__ = 'karolisrusenas'
 
 
-try:
-    import cPickle as pickle
-except ImportError:
-    import pickle
+
+import pickle
 try:
     import hashlib
     sha1 = hashlib.sha1
@@ -44,7 +42,7 @@ class CacheMixin(object):
         return sha1(key).hexdigest()
 
     def _prefix(self, key):
-        return "Cache:%s" % key
+        return "TWAnalyticsCache:%s" % key
 
     def write_cache(self, chunk):
         super(CacheMixin, self).write(chunk)
@@ -103,6 +101,6 @@ class RedisCacheBackend(CacheBackend):
         self.redis.delete(key)
 
     def exists(self, key):
-        print("key found:"+key)
+        print("key found: " + key)
 
         return bool(self.redis.exists(key))
