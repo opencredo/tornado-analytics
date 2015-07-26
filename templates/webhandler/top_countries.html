@@ -1,0 +1,21 @@
+<div id="top-countries" class="box">
+    <div class="box-header with-border">
+        <h3 class="box-title">Where do your readers live?</h3>
+    </div><!-- /.box-header -->
+    <div class="box-body">
+        <table class="table table-bordered">
+            <tbody><tr>
+                <th> Country </th>
+                <th> Users </th>
+            </tr>
+            {% for row in data %}
+            <tr>
+               {% for value in row %}
+                <td>{{ value }}</td>
+                {% end %}
+            </tr>
+            {% end %}
+
+            </tbody></table>
+    </div><!-- /.box-body -->
+</div>

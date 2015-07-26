@@ -3,15 +3,13 @@ from utilities.gaclient import GAcess
 from pprint import pprint as pp
 import time
 
+
 class MainHandler(BaseHandler):
-
     def get(self):
-
         self.render('index.html')
 
 
 class PeopleSourcesHandler(BaseHandler):
-
     def initialize(self):
         service_account = self.settings['service_account_email']
         self.service = GAcess(service_account_email=service_account)
@@ -56,3 +54,43 @@ class PeopleSourcesHandler(BaseHandler):
             self.set_status(400, reason='Failed to fetch people source data')
         else:
             return self.render_string('webhandler/people_sources.html', data=data)
+
+
+class TopCountriesHandler(BaseHandler):
+    def initialize(self):
+        service_account = self.settings['service_account_email']
+        self.service = GAcess(service_account_email=service_account)
+
+    @unblock
+    def get(self):
+        """
+        Returns top countries where your readers live.
+
+        Example:
+        headers:
+        [{'columnType': 'DIMENSION',
+                    'dataType': 'STRING',
+                    'name': 'ga:country'},
+        {'columnType': 'METRIC',
+                    'dataType': 'INTEGER',
+                    'name': 'ga:sessions'}],
+
+        rows:
+        'rows': [['United States', '3740'],
+                  ['United Kingdom', '2228'],
+                  ['India', '1177'],
+                  ['Russia', '667'],
+                  ['Germany', '612']],
+
+
+        :return:
+        """
+        query_result = self.service.get_top_countries()
+
+        try:
+            data = query_result['rows']
+            profile = query_result['profileInfo']
+        except KeyError:
+            self.set_status(400, reason='Failed to fetch top countries data')
+        else:
+            return self.render_string('webhandler/top_countries.html', data=data, profile=profile)
