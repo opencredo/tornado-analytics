@@ -22,6 +22,8 @@ https://developers.google.com/analytics/devguides/reporting/mcf/v3/limits-quotas
 
 Set Per-user limit to more than 1.
 
+Provide service account and profile_id in settings.py
+
 Start the server
 ================
 
