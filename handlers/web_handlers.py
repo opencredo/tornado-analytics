@@ -56,8 +56,14 @@ class PeopleSourcesHandler(BaseHandler):
             except KeyError:
                 self.set_status(400, reason='Failed to fetch people source data')
             else:
+                # formatting seconds to more human readable version
+                for row in data:
+                    m, s = divmod(int(float(row[4])), 60)
+                    h, m = divmod(m, 60)
+                    row[4] = "%d:%02d:%02d" % (h, m, s)
+
                 table_title = 'How did people found your pages?'
-                headers = ['Source', 'Medium', 'Sessions', 'Page views', 'Duration (seconds)']
+                headers = ['Source', 'Medium', 'Sessions', 'Page views', 'Avg. duration']
                 return self.render_string('webhandler/data_table.html',
                                           data=data,
                                           table_title=table_title,
@@ -176,8 +182,14 @@ class TopPagesHandler(BaseHandler):
             except KeyError:
                 self.set_status(400, reason='Failed to fetch top pages data')
             else:
+                # formatting seconds to more human readable version
+                for row in data:
+                    m, s = divmod(int(float(row[3])), 60)
+                    h, m = divmod(m, 60)
+                    row[3] = "%d:%02d:%02d" % (h, m, s)
+
                 table_title = 'Which posts are most popular?'
-                headers = ['Path', 'Page views', 'Unique views', 'Time on page', 'Bounces', 'Ent.', 'Exits']
+                headers = ['Path', 'Page views', 'Unique views', 'Avg. time on page', 'Bounces', 'Ent.', 'Exits']
                 return self.render_string('webhandler/data_table.html',
                                           data=data,
                                           table_title=table_title,

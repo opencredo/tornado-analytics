@@ -137,7 +137,7 @@ class GAcess:
             ids='ga:' + profile_id,
             start_date='%sdaysAgo' % days,
             end_date='today',
-            metrics='ga:sessions,ga:pageviews,ga:sessionDuration',
+            metrics='ga:sessions,ga:pageviews,ga:avgSessionDuration',
             dimensions='ga:source,ga:medium',
             sort='-ga:sessions',
             max_results=max_results).execute()
@@ -204,7 +204,7 @@ class GAcess:
             ids='ga:' + profile_id,
             start_date='%sdaysAgo' % days,
             end_date='today',
-            metrics='ga:pageviews,ga:uniquePageviews,ga:timeOnPage,ga:bounces,ga:entrances,ga:exits',
+            metrics='ga:pageviews,ga:uniquePageviews,ga:avgTimeOnPage,ga:bounces,ga:entrances,ga:exits',
             dimensions='ga:pagePath',
             max_results=max_results,
             sort='-ga:pageviews').execute()
