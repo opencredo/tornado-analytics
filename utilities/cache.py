@@ -50,14 +50,14 @@ class CacheMixin(object):
     def write(self, chunk):
         # do not cache errors
         if self._status_code in [200, 304]:
-            print("writing cache")
             pickled = pickle.dumps(chunk)
             key = self._generate_key(self.request)
+            print("writing cache")
             if hasattr(self, "expires"):
                 self.cache.set(self._prefix(key), pickled, self.expires)
             else:
                 self.cache.set(self._prefix(key), pickled)
-            super(CacheMixin, self).write(chunk)
+        super(CacheMixin, self).write(chunk)
 
 
 class CacheBackend(object):
