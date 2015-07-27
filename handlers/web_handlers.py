@@ -62,7 +62,7 @@ class PeopleSourcesHandler(BaseHandler):
                     h, m = divmod(m, 60)
                     row[4] = "%d:%02d:%02d" % (h, m, s)
 
-                table_title = 'How did people found your pages?'
+                table_title = 'How did people found our pages?'
                 headers = ['Source', 'Medium', 'Sessions', 'Page views', 'Avg. duration']
                 return self.render_string('webhandler/data_table.html',
                                           data=data,
@@ -111,7 +111,7 @@ class TopCountriesHandler(BaseHandler):
             except KeyError:
                 self.set_status(400, reason='Failed to fetch top countries data')
             else:
-                table_title = 'Where do your readers live?'
+                table_title = 'Where do our readers live?'
                 headers = ['Country', 'Users']
                 return self.render_string('webhandler/data_table.html',
                                           data=data,
@@ -236,7 +236,7 @@ class TopKeywordsHandler(BaseHandler):
             except KeyError:
                 self.set_status(400, reason='Failed to fetch top keywords data')
             else:
-                table_title = 'What keywords were used to find you?'
+                table_title = 'What keywords were used to find us?'
                 headers = ['Keyword', 'Sessions']
                 return self.render_string('webhandler/data_table.html',
                                           data=data,
@@ -276,7 +276,7 @@ class TotalUsersHandler(BaseHandler):
             except KeyError:
                 self.set_status(400, reason='Failed to fetch total users data')
             else:
-                table_title = 'How many people are reading your posts?'
+                table_title = 'How many people are reading our posts?'
                 headers = ['']
                 return self.render_string('webhandler/data_table.html',
                                           data=data,
@@ -348,7 +348,7 @@ class ReferrersHandler(BaseHandler):
                 for row in data:
                     row[2] = ("%.2f" % float(row[2])) + "%"
 
-                table_title = 'Who is linking to you?'
+                table_title = 'Who is linking to us?'
                 headers = ['Full referrer', 'Users', 'Bounces']
                 return self.render_string('webhandler/data_table.html',
                                           data=data,
@@ -409,7 +409,7 @@ class TopBrowserAndOs(BaseHandler):
                 self.set_status(400, reason='Failed to fetch referrers data')
             else:
 
-                table_title = 'What browser and OS your readers use?'
+                table_title = 'What browser and OS our readers use?'
                 headers = ['OS', 'Version', 'Browser', 'Browser version', 'Sessions']
                 return self.render_string('webhandler/data_table.html',
                                           data=data,
