@@ -50,7 +50,7 @@ class PeopleSourcesHandler(BaseHandler):
             service_account = self.settings['service_account_email']
             self.service = GAcess(service_account_email=service_account)
 
-            query_result = self.service.get_people_sources()
+            query_result = self.service.get_people_sources(profile_id=self.settings['ga_profile_id'])
             try:
                 data = query_result['rows']
             except KeyError:
@@ -63,7 +63,7 @@ class PeopleSourcesHandler(BaseHandler):
                                           table_title=table_title,
                                           headers=headers)
         except Exception as ex:
-            self.set_status(400)
+            self.set_status(403)
             return self.render_string('error.html',
                                       error=ex)
 
@@ -99,8 +99,7 @@ class TopCountriesHandler(BaseHandler):
             service_account = self.settings['service_account_email']
             self.service = GAcess(service_account_email=service_account)
 
-            query_result = self.service.get_top_countries()
-
+            query_result = self.service.get_top_countries(profile_id=self.settings['ga_profile_id'])
             try:
                 data = query_result['rows']
             except KeyError:
@@ -113,7 +112,7 @@ class TopCountriesHandler(BaseHandler):
                                           table_title=table_title,
                                           headers=headers)
         except Exception as ex:
-            self.set_status(400)
+            self.set_status(403)
             return self.render_string('error.html',
                                       error=ex)
 
@@ -171,8 +170,7 @@ class TopPagesHandler(BaseHandler):
             service_account = self.settings['service_account_email']
             self.service = GAcess(service_account_email=service_account)
 
-            query_result = self.service.get_top_pages()
-
+            query_result = self.service.get_top_pages(profile_id=self.settings['ga_profile_id'])
             try:
                 data = query_result['rows']
             except KeyError:
@@ -185,7 +183,7 @@ class TopPagesHandler(BaseHandler):
                                           table_title=table_title,
                                           headers=headers)
         except Exception as ex:
-            self.set_status(400)
+            self.set_status(403)
             return self.render_string('error.html',
                                       error=ex)
 
@@ -220,8 +218,7 @@ class TopKeywordsHandler(BaseHandler):
             service_account = self.settings['service_account_email']
             self.service = GAcess(service_account_email=service_account)
 
-            query_result = self.service.get_top_keywords()
-
+            query_result = self.service.get_top_keywords(profile_id=self.settings['ga_profile_id'])
             try:
                 data = query_result['rows']
             except KeyError:
@@ -234,7 +231,7 @@ class TopKeywordsHandler(BaseHandler):
                                           table_title=table_title,
                                           headers=headers)
         except Exception as ex:
-            self.set_status(400)
+            self.set_status(403)
             return self.render_string('error.html',
                                       error=ex)
 
@@ -261,7 +258,7 @@ class TotalUsersHandler(BaseHandler):
             service_account = self.settings['service_account_email']
             self.service = GAcess(service_account_email=service_account)
 
-            query_result = self.service.get_users()
+            query_result = self.service.get_users(profile_id=self.settings['ga_profile_id'])
             try:
                 data = query_result['rows']
             except KeyError:
@@ -274,7 +271,7 @@ class TotalUsersHandler(BaseHandler):
                                           table_title=table_title,
                                           headers=headers)
         except Exception as ex:
-            self.set_status(400)
+            self.set_status(403)
             return self.render_string('error.html',
                                       error=ex)
 
@@ -329,7 +326,7 @@ class ReferrersHandler(BaseHandler):
             service_account = self.settings['service_account_email']
             self.service = GAcess(service_account_email=service_account)
 
-            query_result = self.service.get_referrers()
+            query_result = self.service.get_referrers(profile_id=self.settings['ga_profile_id'])
             try:
                 data = query_result['rows']
             except KeyError:
@@ -346,7 +343,7 @@ class ReferrersHandler(BaseHandler):
                                           table_title=table_title,
                                           headers=headers)
         except Exception as ex:
-            self.set_status(400)
+            self.set_status(403)
             return self.render_string('error.html',
                                       error=ex)
 
@@ -393,7 +390,7 @@ class TopBrowserAndOs(BaseHandler):
             service_account = self.settings['service_account_email']
             self.service = GAcess(service_account_email=service_account)
 
-            query_result = self.service.get_top_browsers_n_os()
+            query_result = self.service.get_top_browsers_n_os(profile_id=self.settings['ga_profile_id'])
             try:
                 data = query_result['rows']
             except KeyError:
@@ -407,6 +404,6 @@ class TopBrowserAndOs(BaseHandler):
                                           table_title=table_title,
                                           headers=headers)
         except Exception as ex:
-            self.set_status(400)
+            self.set_status(403)
             return self.render_string('error.html',
                                       error=ex)
