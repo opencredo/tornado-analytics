@@ -12,7 +12,7 @@ import tornado.web
 from utilities.cache import RedisCacheBackend
 import redis
 
-from settings import settings
+from settings import settings, FORKS_PER_CPU, DEBUG
 from urls import url_patterns
 
 
@@ -27,8 +27,15 @@ class TornadoApplication(tornado.web.Application):
 def main():
     app = TornadoApplication()
     http_server = tornado.httpserver.HTTPServer(app)
-    http_server.listen(options.port)
-    tornado.ioloop.IOLoop.instance().start()
+
+    if DEBUG:
+        http_server.listen(options.port)
+        tornado.ioloop.IOLoop.instance().start()
+    else:
+        # when debugging is off - forking processes per CPU
+        http_server.bind(8888)
+        http_server.start(FORKS_PER_CPU)
+        tornado.ioloop.IOLoop.current().start()
 
 
 if __name__ == "__main__":

@@ -9,13 +9,17 @@ PROFILE_ID = '***REMOVED***'
 # seconds
 CACHE_EXPIRES = 180
 
+# forks one process per cpu, only forks if debug mode is in False
+FORKS_PER_CPU = 0
+DEBUG = False
+
 define("port", default=8888, help="run on the given port", type=int)
 define("config", default=None, help="tornado config file")
 define("debug", default=False, help="debug mode")
 
 settings = {}
 
-settings["debug"] = True
+settings["debug"] = DEBUG
 settings["cookie_secret"] = "askdfjpo83q47r9haskldfjh8"
 settings["login_url"] = "/login"
 settings["static_path"] = os.path.join(os.path.dirname(__file__), "static")
