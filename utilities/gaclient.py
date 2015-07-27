@@ -5,8 +5,6 @@ from oauth2client.client import SignedJwtAssertionCredentials
 import httplib2
 import os
 from oauth2client.file import Storage
-from oauth2client.tools import run
-from oauth2client import tools
 
 
 class GAcess:
@@ -65,6 +63,14 @@ class GAcess:
         return service
 
     def get_first_profile_id(self):
+        """
+        This is used when profile ID in settings is not set (for example you don't know it), however, try avoiding
+        this since it results in exponentially increasing your request count (1 query becomes 4 requests and that can
+        lead to certain problems, since Google API has a limit per user of 10 requests/second). It is also much faster
+        to query for results when profile ID is provided.
+
+        :return:
+        """
         # Use the Analytics service object to get the first profile id.
 
         # Get a list of all Google Analytics accounts for this user
