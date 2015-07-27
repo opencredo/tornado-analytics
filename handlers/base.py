@@ -1,7 +1,9 @@
 import tornado.ioloop
 import json
 import tornado.web
-
+from tornado import auth as tornado_auth
+from tornado import gen
+import settings
 from functools import partial, wraps
 from concurrent.futures import ThreadPoolExecutor
 
@@ -18,6 +20,13 @@ class BaseHandler(CacheMixin, tornado.web.RequestHandler):
 
     def prepare(self):
         super(BaseHandler, self).prepare()
+
+    def get_current_user(self):
+        user = self.get_secure_cookie('tracker')
+        if user:
+            return user
+        else:
+            return None
 
     def load_json(self):
         """Load JSON from the request body and store them in
@@ -51,6 +60,52 @@ class BaseHandler(CacheMixin, tornado.web.RequestHandler):
         arg = self.request.arguments[name]
         logger.debug("Found '%s': %s in JSON arguments" % (name, arg))
         return arg
+
+
+class GAuthLoginHandler(BaseHandler, tornado_auth.GoogleOAuth2Mixin):
+    @tornado.gen.coroutine
+    def get(self):
+        if self.get_current_user():
+            self.redirect('/')
+            return
+
+        if self.get_argument('code', False):
+            user = yield self.get_authenticated_user(redirect_uri=settings.google_redirect_url,
+                                                     code=self.get_argument('code'))
+            if not user:
+                self.clear_all_cookies()
+                raise tornado.web.HTTPError(500, 'Google authentication failed')
+
+            access_token = str(user['access_token'])
+            http_client = self.get_auth_http_client()
+            response = yield http_client.fetch(
+                'https://www.googleapis.com/oauth2/v1/userinfo?access_token='+access_token)
+
+            # decoding bytecode to utf-8
+            user = json.loads(response.body.decode('utf-8'))
+
+            self.set_secure_cookie('tracker', user['email'])
+            self.redirect('/')
+            return
+
+        elif self.get_secure_cookie('tracker'):
+            self.redirect('/')
+            return
+
+        else:
+            yield self.authorize_redirect(
+                redirect_uri=settings.google_redirect_url,
+                client_id=self.settings['google_oauth']['key'],
+                scope=['email'],
+                response_type='code',
+                extra_params={'approval_prompt': 'auto'})
+
+class AuthLogoutHandler(BaseHandler):
+    def get(self):
+        if self.get_current_user():
+            self.clear_cookie("tracker")
+            self.redirect(self.get_argument("next", "/"))
+
 
 EXECUTOR = ThreadPoolExecutor(max_workers=100)
 

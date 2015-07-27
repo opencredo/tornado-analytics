@@ -70,7 +70,7 @@ desired effect
                         <!-- Menu Toggle Button -->
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                            <span class="hidden-xs">Username</span>
+                            <span class="hidden-xs">{{ current_user }}</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- Menu Footer-->
@@ -78,11 +78,11 @@ desired effect
                                 <div class="pull-left">
                                     <a href="#" class="btn btn-default btn-flat">Profile</a>
                                 </div>
-                                <div class="pull-left">
-                                    <a href="/admin/" class="btn btn-default btn-flat">Admin</a>
-                                </div>
+{#                                <div class="pull-left">#}
+{#                                    <a href="/admin/" class="btn btn-default btn-flat">Admin</a>#}
+{#                                </div>#}
                                 <div class="pull-right">
-                                    <a href="/logout/" class="btn btn-default btn-flat">Logout</a>
+                                    <a href="/logout" class="btn btn-default btn-flat">Logout</a>
                                 </div>
                             </li>
                         </ul>

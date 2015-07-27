@@ -2,9 +2,18 @@ from handlers.base import BaseHandler, unblock
 from utilities.gaclient import GAcess
 from utilities.cache import cache
 from settings import CACHE_EXPIRES
+from tornado import web
+
+class LoginPage(BaseHandler):
+
+    @cache(1)
+    def get(self):
+        self.render('accounts/login.html')
 
 
 class MainHandler(BaseHandler):
+
+    @web.authenticated
     @cache(1)
     def get(self):
         self.render('index.html')
@@ -12,6 +21,7 @@ class MainHandler(BaseHandler):
 
 class PeopleSourcesHandler(BaseHandler):
 
+    @web.authenticated
     @cache(CACHE_EXPIRES)  # set the cache expires
     @unblock
     def get(self):
@@ -76,6 +86,7 @@ class PeopleSourcesHandler(BaseHandler):
 
 class TopCountriesHandler(BaseHandler):
 
+    @web.authenticated
     @cache(CACHE_EXPIRES)  # set the cache expires
     @unblock
     def get(self):
@@ -124,6 +135,7 @@ class TopCountriesHandler(BaseHandler):
 
 class TopPagesHandler(BaseHandler):
 
+    @web.authenticated
     @cache(CACHE_EXPIRES)  # set the cache expires
     @unblock
     def get(self):
@@ -202,6 +214,7 @@ class TopPagesHandler(BaseHandler):
 
 class TopKeywordsHandler(BaseHandler):
 
+    @web.authenticated
     @cache(CACHE_EXPIRES)  # set the cache expires
     @unblock
     def get(self):
@@ -249,6 +262,7 @@ class TopKeywordsHandler(BaseHandler):
 
 class TotalUsersHandler(BaseHandler):
 
+    @web.authenticated
     @cache(CACHE_EXPIRES)  # set the cache expires
     @unblock
     def get(self):
@@ -289,6 +303,7 @@ class TotalUsersHandler(BaseHandler):
 
 class ReferrersHandler(BaseHandler):
 
+    @web.authenticated
     @cache(CACHE_EXPIRES)  # set the cache expires
     @unblock
     def get(self):
@@ -362,6 +377,7 @@ class ReferrersHandler(BaseHandler):
 
 class TopBrowserAndOs(BaseHandler):
 
+    @web.authenticated
     @cache(CACHE_EXPIRES)  # set the cache expires
     @unblock
     def get(self):
