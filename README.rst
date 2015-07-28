@@ -22,20 +22,19 @@ https://developers.google.com/analytics/devguides/reporting/mcf/v3/limits-quotas
 
 Set Per-user limit to more than 1.
 
-Provide service account and profile_id in settings.py
+**Rename app_conf.yaml.example to app_conf.yaml**
 
+Then, use this file for configuration:
 
-# Authentication via Google
+* applicationSettings - these options are used for callbacks as well as server startup. For local development
+  leave them as is.
 
-provide details for secure authentication in settings.py:
-* google_oauth settings value should contain key with your Client ID (create a new client ID application) and secret with Client secret
-* allowed_domain settings value should contain whitelisted domain, leave it blank to allow all domains.
+* googleAnalyticsApi - in your google developer console go to APIs & auth > credentials and create new service account.
+  Your profileId is your google analytics profile ID.
 
-# Details to query google API
+* googleOAuth - key value should contain key with your Client ID (Client ID for native application) and secret - Client secret
+* allowedDomain value should contain whitelisted domain, leave it blank ('') to allow all domains.
 
-* SERVICE_ACCOUNT settings value should contain email address of your service account that you created and gave rights
-  to access your analytics.
-* PROFILE_ID settings value contain your analytics profile ID to reduce query count.
 
 Start the server
 ================

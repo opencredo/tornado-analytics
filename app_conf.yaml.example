@@ -1,0 +1,19 @@
+applicationSettings:
+    debug: true
+    hostname: "localhost"
+    port: 8888
+    forksPerCPU: 0
+
+# Details for querying google analytics API
+# don't forget to add it to your analytics users, profileId - add your google analytics profile ID
+googleAnalyticsApi:
+    serviceAccount: '__your_service_account@developer.gserviceaccount.com'
+    profileId: '__your_profile__id'
+
+# application credentials from APIs & auth > credentials > Client ID for native application
+# key represents "Client ID", secret is "Client secret". Oauth module expects to find "google_oauth" in app settings
+# set allowedDomain to '' if you want to allow all domains
+googleOAuth:
+    key: '__your_client_key__'
+    secret: '__your_client_secret__'
+    allowedDomain: '__your_domain__'

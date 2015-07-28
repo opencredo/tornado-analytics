@@ -7,3 +7,5 @@
 
 # Vagrant
 .vagrant
+
+app_conf.yaml
