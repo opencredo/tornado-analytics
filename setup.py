@@ -1,13 +1,13 @@
 from setuptools import setup, find_packages
 
 
-setup(name='tornado-project-skeleton',
+setup(name='tornado-analytics',
       version='0.1',
-      description='Tornado project skeleton',
+      description='Tornado Google Analytics project',
       long_description='',
-      author='Henning Kage',
-      author_email='henning.kage@gmail.com',
-      url='https://github.com/hkage/tornado-project-skeleton',
+      author='Karolis Rusenas',
+      author_email='karolis.rusenas@gmail.com',
+      url='',
       include_package_data=True,
       classifiers=[],
       packages=find_packages(exclude=['tests']),

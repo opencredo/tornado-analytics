@@ -22,6 +22,10 @@ class BaseHandler(CacheMixin, tornado.web.RequestHandler):
         super(BaseHandler, self).prepare()
 
     def get_current_user(self):
+        """
+        Gets secure cookie containing user email address. Secure cookies are encrypted.
+        :return:
+        """
         user = self.get_secure_cookie('tracker')
         if user:
             return user
@@ -63,8 +67,10 @@ class BaseHandler(CacheMixin, tornado.web.RequestHandler):
 
 
 class GAuthLoginHandler(BaseHandler, tornado_auth.GoogleOAuth2Mixin):
+
     @tornado.gen.coroutine
     def get(self):
+        # if user is authenticated - redirect them
         if self.get_current_user():
             self.redirect('/')
             return
@@ -103,6 +109,9 @@ class GAuthLoginHandler(BaseHandler, tornado_auth.GoogleOAuth2Mixin):
 
 class AuthLogoutHandler(BaseHandler):
     def get(self):
+        """
+        Logout handler - deletes authentication secure cookie
+        """
         if self.get_current_user():
             self.clear_cookie("tracker")
             self.redirect(self.get_argument("next", "/"))
