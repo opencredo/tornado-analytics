@@ -64,3 +64,10 @@ Adding new tables
 * Define your handler in urls.py
 * Add your table div in templates/index.html, then, in js section add loading div function all:
   loaddiv('#__your_created_div', '/your-new-url-to-data-table');
+
+
+Style
+=====
+
+For style this application uses https://almsaeedstudio.com/AdminLTE template, feel free to change base template and
+static css files to improve it or ruin it.
