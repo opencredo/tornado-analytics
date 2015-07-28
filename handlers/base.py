@@ -76,7 +76,7 @@ class GAuthLoginHandler(BaseHandler, tornado_auth.GoogleOAuth2Mixin):
             return
 
         if self.get_argument('code', False):
-            user = yield self.get_authenticated_user(redirect_uri=settings.google_redirect_url,
+            user = yield self.get_authenticated_user(redirect_uri=self.settings["google_redirect_url"],
                                                      code=self.get_argument('code'))
             if not user:
                 self.clear_all_cookies()
@@ -100,7 +100,7 @@ class GAuthLoginHandler(BaseHandler, tornado_auth.GoogleOAuth2Mixin):
 
         else:
             yield self.authorize_redirect(
-                redirect_uri=settings.google_redirect_url,
+                redirect_uri=self.settings["google_redirect_url"],
                 client_id=self.settings['google_oauth']['key'],
                 scope=['email'],
                 response_type='code',

@@ -16,7 +16,8 @@ setup(name='tornado-analytics',
           'google-api-python-client',
           'fabric',
           'PyOpenSSL',
-          'redis'
+          'redis',
+          'PyYAML'
       ],
       tests_require=[
           'pytest>=2.6.0',
