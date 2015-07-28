@@ -4,6 +4,7 @@ import os.path
 
 from tornado.options import define
 
+# Details for querying google analytics API
 SERVICE_ACCOUNT = '***REMOVED***'
 PROFILE_ID = '***REMOVED***'
 # seconds
@@ -37,7 +38,9 @@ settings["xsrf_cookies"] = False
 settings["service_account_email"] = SERVICE_ACCOUNT
 # provide profile ID to reduce queries.
 settings["ga_profile_id"] = PROFILE_ID
+# ============= CLIENT ID ===============
 # application credentials from APIs & auth > credentials > Client ID for native application
 # key represents "Client ID", secret is "Client secret". Oauth module expects to find "google_oauth" in app settings
 settings["google_oauth"] = dict(key='***REMOVED***',
                                 secret='***REMOVED***')
+settings["allowed_domain"] = 'opencredo.com'

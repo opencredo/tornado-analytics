@@ -24,6 +24,19 @@ Set Per-user limit to more than 1.
 
 Provide service account and profile_id in settings.py
 
+
+# Authentication via Google
+
+provide details for secure authentication in settings.py:
+* google_oauth settings value should contain key with your Client ID (create a new client ID application) and secret with Client secret
+* allowed_domain settings value should contain whitelisted domain, leave it blank to allow all domains.
+
+# Details to query google API
+
+* SERVICE_ACCOUNT settings value should contain email address of your service account that you created and gave rights
+  to access your analytics.
+* PROFILE_ID settings value contain your analytics profile ID to reduce query count.
+
 Start the server
 ================
 

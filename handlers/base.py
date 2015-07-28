@@ -98,7 +98,8 @@ class GAuthLoginHandler(BaseHandler, tornado_auth.GoogleOAuth2Mixin):
                 client_id=self.settings['google_oauth']['key'],
                 scope=['email'],
                 response_type='code',
-                extra_params={'approval_prompt': 'auto'})
+                extra_params={'approval_prompt': 'auto',
+                              'hd': self.settings['allowed_domain']})  # passing 'hd' parameter to whitelist this domain
 
 class AuthLogoutHandler(BaseHandler):
     def get(self):
