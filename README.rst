@@ -32,6 +32,8 @@ Then, use this file for configuration:
 * googleAnalyticsApi - in your google developer console go to APIs & auth > credentials and create new service account.
   Your profileId is your google analytics profile ID.
 
+* Download client_secrets '.p12' file and add it to "utilities"
+
 * googleOAuth - key value should contain key with your Client ID (Client ID for native application) and secret - Client secret
 * allowedDomain value should contain whitelisted domain, leave it blank ('') to allow all domains.
 

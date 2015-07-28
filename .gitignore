@@ -9,3 +9,4 @@
 .vagrant
 
 app_conf.yaml
+utilities/client_secrets.p12
