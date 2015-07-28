@@ -300,7 +300,7 @@ def main():
     # Use the developer console and replace the values with your
     # service account email and relative location of your key file.
     # don't forget to add your service account email address to your google analytics users!
-    service_account_email = '***REMOVED***'
+    service_account_email = '499658695983-le77s76oiirnhufg6heq3f61irjqp51a@developer.gserviceaccount.com'
     # download client secrets file from your google developer console > auth > credentials
     # key_file_location = 'utilities/client_secrets.p12'
 
