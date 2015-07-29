@@ -60,7 +60,8 @@ class PeopleSourcesHandler(BaseHandler):
             service_account = self.settings['service_account_email']
             self.service = GAcess(service_account_email=service_account)
 
-            query_result = self.service.get_people_sources(profile_id=self.settings['ga_profile_id'])
+            query_result = self.service.get_people_sources(profile_id=self.settings['ga_profile_id'],
+                                                           days=self.settings['start_days_ago'])
             try:
                 data = query_result['rows']
             except KeyError:
@@ -116,7 +117,8 @@ class TopCountriesHandler(BaseHandler):
             service_account = self.settings['service_account_email']
             self.service = GAcess(service_account_email=service_account)
 
-            query_result = self.service.get_top_countries(profile_id=self.settings['ga_profile_id'])
+            query_result = self.service.get_top_countries(profile_id=self.settings['ga_profile_id'],
+                                                          days=self.settings['start_days_ago'])
             try:
                 data = query_result['rows']
             except KeyError:
@@ -188,7 +190,8 @@ class TopPagesHandler(BaseHandler):
             service_account = self.settings['service_account_email']
             self.service = GAcess(service_account_email=service_account)
 
-            query_result = self.service.get_top_pages(profile_id=self.settings['ga_profile_id'])
+            query_result = self.service.get_top_pages(profile_id=self.settings['ga_profile_id'],
+                                                      days=self.settings['start_days_ago'])
             try:
                 data = query_result['rows']
             except KeyError:
@@ -243,7 +246,8 @@ class TopKeywordsHandler(BaseHandler):
             service_account = self.settings['service_account_email']
             self.service = GAcess(service_account_email=service_account)
 
-            query_result = self.service.get_top_keywords(profile_id=self.settings['ga_profile_id'])
+            query_result = self.service.get_top_keywords(profile_id=self.settings['ga_profile_id'],
+                                                         days=self.settings['start_days_ago'])
             try:
                 data = query_result['rows']
             except KeyError:
@@ -284,7 +288,8 @@ class TotalUsersHandler(BaseHandler):
             service_account = self.settings['service_account_email']
             self.service = GAcess(service_account_email=service_account)
 
-            query_result = self.service.get_users(profile_id=self.settings['ga_profile_id'])
+            query_result = self.service.get_users(profile_id=self.settings['ga_profile_id'],
+                                                  days=self.settings['start_days_ago'])
             try:
                 data = query_result['rows']
             except KeyError:
@@ -353,7 +358,8 @@ class ReferrersHandler(BaseHandler):
             service_account = self.settings['service_account_email']
             self.service = GAcess(service_account_email=service_account)
 
-            query_result = self.service.get_referrers(profile_id=self.settings['ga_profile_id'])
+            query_result = self.service.get_referrers(profile_id=self.settings['ga_profile_id'],
+                                                      days=self.settings['start_days_ago'])
             try:
                 data = query_result['rows']
             except KeyError:
@@ -418,7 +424,8 @@ class TopBrowserAndOs(BaseHandler):
             service_account = self.settings['service_account_email']
             self.service = GAcess(service_account_email=service_account)
 
-            query_result = self.service.get_top_browsers_n_os(profile_id=self.settings['ga_profile_id'])
+            query_result = self.service.get_top_browsers_n_os(profile_id=self.settings['ga_profile_id'],
+                                                              days=self.settings['start_days_ago'])
             try:
                 data = query_result['rows']
             except KeyError:
