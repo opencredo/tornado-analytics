@@ -1,0 +1,4 @@
+echo "--> ACTION HOOK: build <--"
+
+# need to do this since openshift does not install this package dependencies on it's own
+pip install --upgrade google-api-python-client
