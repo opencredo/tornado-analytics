@@ -48,7 +48,7 @@ python run.py
 Deploying on OpenShift
 ======================
 
-* Create new application specifying this repo.
+* Create new Python 3.3 application specifying this repo.
 * WHen creating native client application through google developer console - specify web application and input your full
   application name (with your domain, i.e. http://analytics-rusenask.rhcloud.com/login )
 * Checkout your newly created OpenShift repo and modify app_config.yaml, you can skip host, port settings since they will
