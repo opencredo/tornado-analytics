@@ -73,3 +73,11 @@ Style
 
 For style this application uses https://almsaeedstudio.com/AdminLTE template, feel free to change base template and
 static css files to improve it or ruin it.
+
+
+TODO
+====
+
+* logging
+* testing
+* custom views
