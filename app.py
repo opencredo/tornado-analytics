@@ -1,13 +1,3 @@
-
-#!/usr/bin/env python
-
-#
-# This file may be used instead of Apache mod_wsgi to run your python
-# web application in a different framework.  A few examples are
-# provided (cherrypi, gevent), but this file may be altered to run
-# whatever framework is desired - or a completely customized service.
-#
-import imp
 import os
 
 try:
@@ -23,13 +13,24 @@ except IOError:
 #
 
 
-#
-#  main():
-#
-if __name__ == '__main__':
-    ip  = os.environ['OPENSHIFT_PYTHON_IP']
-    port = int(os.environ['OPENSHIFT_PYTHON_PORT'])
-    app = imp.load_source('TornadoApplication', 'run.py')
+from utilities.cache import RedisCacheBackend
+import redis
 
-    app.application.listen(port, ip)
-    app.ioloop.IOLoop.instance().start()
+import tornado
+from run import TornadoApplication
+if __name__ == '__main__':
+    ip = os.environ['OPENSHIFT_PYTHON_IP']
+    port = int(os.environ['OPENSHIFT_PYTHON_PORT'])
+
+    app = TornadoApplication()
+    # overriding default redis settings with openshift ones.
+    app.redis = redis.Redis(host=os.environ['OPENSHIFT_REDIS_HOST'], port=os.environ['OPENSHIFT_REDIS_PORT'], password=os.environ['REDIS_PASSWORD'])
+    app.cache = RedisCacheBackend(app.redis)
+
+    # overriding google oauth callback url
+    app.settings['google_redirect_url'] = 'http://%s/login' % os.environ['OPENSHIFT_APP_DNS']
+
+    http_server = tornado.httpserver.HTTPServer(app)
+    http_server.listen(port=port, address=ip)
+
+    tornado.ioloop.IOLoop.instance().start()

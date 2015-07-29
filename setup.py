@@ -17,7 +17,8 @@ setup(name='tornado-analytics',
           'fabric',
           'PyOpenSSL',
           'redis',
-          'PyYAML'
+          'PyYAML',
+          'certifi'
       ],
       tests_require=[
           'pytest>=2.6.0',
