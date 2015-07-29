@@ -45,6 +45,26 @@ Start the server
 python run.py
 
 
+Deploying on OpenShift
+======================
+
+* Create new application specifying this repo.
+* WHen creating native client application through google developer console - specify web application and input your full
+  application name (with your domain, i.e. http://analytics-rusenask.rhcloud.com/login )
+* Checkout your newly created OpenShift repo and modify app_config.yaml, you can skip host, port settings since they will
+  be overwritten by OpenShift environment variables anyway.
+  Download your serivce account's p12 key, add it to utilities folder, commit it and push it to that OpenShift repo as well.
+* Add redis to your application: rhc add-cartridge http://cartreflect-claytondev.rhcloud.com/reflect?github=smarterclayton/openshift-redis-cart
+
+* Restart your application: rhc app-restart __your_app_name__
+
+Troubleshooting OpenShift app
+=============================
+
+* SSH into your application: rhc ssh __your_app_name__
+* Check logs in app-root/logs/python.log
+* you can modify code, add additional debugging information in /app-root/repo/
+
 Adding new tables
 =================
 
