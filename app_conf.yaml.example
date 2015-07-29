@@ -6,9 +6,13 @@ applicationSettings:
 
 # Details for querying google analytics API
 # don't forget to add it to your analytics users, profileId - add your google analytics profile ID
+# startDaysAgo - specify start date, it can be 7, 20, 30 days ago, this value should be integer
+# specify keyFileLocation or leave it blank to look for it in default location (project_root/utilities/)
 googleAnalyticsApi:
     serviceAccount: '__your_service_account@developer.gserviceaccount.com'
     profileId: '__your_profile__id'
+    startDaysAgo: 7
+    keyFileLocation: ''
 
 # application credentials from APIs & auth > credentials > Client ID for native application
 # key represents "Client ID", secret is "Client secret". Oauth module expects to find "google_oauth" in app settings

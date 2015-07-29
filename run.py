@@ -32,6 +32,7 @@ class TornadoApplication(tornado.web.Application):
                 settings["google_redirect_url"] = 'http://%s:%s/login' % (document["applicationSettings"]['hostname'],
                                                                           document["applicationSettings"]['port'])
                 settings["forks_per_cpu"] = document["applicationSettings"]["forksPerCPU"]
+
             except Exception as ex:
                 print("Check your application settings: %s" % ex)
                 sys.exit(1)
@@ -40,6 +41,13 @@ class TornadoApplication(tornado.web.Application):
             try:
                 settings["service_account_email"] = document["googleAnalyticsApi"]["serviceAccount"]
                 settings["ga_profile_id"] = document["googleAnalyticsApi"]["profileId"]
+                settings["start_days_ago"] = int(document["googleAnalyticsApi"]["startDaysAgo"])
+                key_file = document["googleAnalyticsApi"]["keyFileLocation"]
+                if not key_file or key_file == '':
+                    settings["key_file_location"] = None
+                else:
+                    settings["key_file_location"] = key_file
+
             except Exception as ex:
                 print("Check your google service account details: %s" % ex)
                 sys.exit(1)

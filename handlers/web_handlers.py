@@ -58,9 +58,11 @@ class PeopleSourcesHandler(BaseHandler):
         """
         try:
             service_account = self.settings['service_account_email']
-            self.service = GAcess(service_account_email=service_account)
+            self.service = GAcess(service_account_email=service_account,
+                                  key_file_location=self.settings['key_file_location'])
 
-            query_result = self.service.get_people_sources(profile_id=self.settings['ga_profile_id'])
+            query_result = self.service.get_people_sources(profile_id=self.settings['ga_profile_id'],
+                                                           days=self.settings['start_days_ago'])
             try:
                 data = query_result['rows']
             except KeyError:
@@ -114,9 +116,11 @@ class TopCountriesHandler(BaseHandler):
         """
         try:
             service_account = self.settings['service_account_email']
-            self.service = GAcess(service_account_email=service_account)
+            self.service = GAcess(service_account_email=service_account,
+                                  key_file_location=self.settings['key_file_location'])
 
-            query_result = self.service.get_top_countries(profile_id=self.settings['ga_profile_id'])
+            query_result = self.service.get_top_countries(profile_id=self.settings['ga_profile_id'],
+                                                          days=self.settings['start_days_ago'])
             try:
                 data = query_result['rows']
             except KeyError:
@@ -186,9 +190,11 @@ class TopPagesHandler(BaseHandler):
         """
         try:
             service_account = self.settings['service_account_email']
-            self.service = GAcess(service_account_email=service_account)
+            self.service = GAcess(service_account_email=service_account,
+                                  key_file_location=self.settings['key_file_location'])
 
-            query_result = self.service.get_top_pages(profile_id=self.settings['ga_profile_id'])
+            query_result = self.service.get_top_pages(profile_id=self.settings['ga_profile_id'],
+                                                      days=self.settings['start_days_ago'])
             try:
                 data = query_result['rows']
             except KeyError:
@@ -241,9 +247,11 @@ class TopKeywordsHandler(BaseHandler):
         """
         try:
             service_account = self.settings['service_account_email']
-            self.service = GAcess(service_account_email=service_account)
+            self.service = GAcess(service_account_email=service_account,
+                                  key_file_location=self.settings['key_file_location'])
 
-            query_result = self.service.get_top_keywords(profile_id=self.settings['ga_profile_id'])
+            query_result = self.service.get_top_keywords(profile_id=self.settings['ga_profile_id'],
+                                                         days=self.settings['start_days_ago'])
             try:
                 data = query_result['rows']
             except KeyError:
@@ -282,9 +290,11 @@ class TotalUsersHandler(BaseHandler):
         """
         try:
             service_account = self.settings['service_account_email']
-            self.service = GAcess(service_account_email=service_account)
+            self.service = GAcess(service_account_email=service_account,
+                                  key_file_location=self.settings['key_file_location'])
 
-            query_result = self.service.get_users(profile_id=self.settings['ga_profile_id'])
+            query_result = self.service.get_users(profile_id=self.settings['ga_profile_id'],
+                                                  days=self.settings['start_days_ago'])
             try:
                 data = query_result['rows']
             except KeyError:
@@ -351,9 +361,11 @@ class ReferrersHandler(BaseHandler):
         """
         try:
             service_account = self.settings['service_account_email']
-            self.service = GAcess(service_account_email=service_account)
+            self.service = GAcess(service_account_email=service_account,
+                                  key_file_location=self.settings['key_file_location'])
 
-            query_result = self.service.get_referrers(profile_id=self.settings['ga_profile_id'])
+            query_result = self.service.get_referrers(profile_id=self.settings['ga_profile_id'],
+                                                      days=self.settings['start_days_ago'])
             try:
                 data = query_result['rows']
             except KeyError:
@@ -416,9 +428,11 @@ class TopBrowserAndOs(BaseHandler):
         """
         try:
             service_account = self.settings['service_account_email']
-            self.service = GAcess(service_account_email=service_account)
+            self.service = GAcess(service_account_email=service_account,
+                                  key_file_location=self.settings['key_file_location'])
 
-            query_result = self.service.get_top_browsers_n_os(profile_id=self.settings['ga_profile_id'])
+            query_result = self.service.get_top_browsers_n_os(profile_id=self.settings['ga_profile_id'],
+                                                              days=self.settings['start_days_ago'])
             try:
                 data = query_result['rows']
             except KeyError:
@@ -435,3 +449,4 @@ class TopBrowserAndOs(BaseHandler):
             self.set_status(403)
             return self.render_string('error.html',
                                       error=ex)
+
