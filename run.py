@@ -40,6 +40,7 @@ class TornadoApplication(tornado.web.Application):
             try:
                 settings["service_account_email"] = document["googleAnalyticsApi"]["serviceAccount"]
                 settings["ga_profile_id"] = document["googleAnalyticsApi"]["profileId"]
+                settings["start_days_ago"] = int(document["googleAnalyticsApi"]["startDaysAgo"])
             except Exception as ex:
                 print("Check your google service account details: %s" % ex)
                 sys.exit(1)
