@@ -1,4 +1,4 @@
-from handlers.base import BaseHandler, unblock
+from handlers.base import BaseHandler, unblock, StatsHandler
 from utilities.gaclient import GAcess
 from utilities.cache import cache
 from settings import CACHE_EXPIRES
@@ -205,13 +205,13 @@ class TopPagesHandler(BaseHandler):
                     m, s = divmod(int(float(row[3])), 60)
                     h, m = divmod(m, 60)
                     row[3] = "%d:%02d:%02d" % (h, m, s)
-
                 table_title = 'Which posts are most popular?'
-                headers = ['Path', 'Page views', 'Unique views', 'Avg. time on page', 'Bounces', 'Ent.', 'Exits']
-                return self.render_string('webhandler/data_table.html',
+                # not using this anymore
+                # headers = ['Path', 'Page views', 'Unique views', 'Avg. time on page', 'Bounces', 'Ent.', 'Exits']
+                return self.render_string('webhandler/top_pages.html',
                                           data=data,
                                           table_title=table_title,
-                                          headers=headers)
+                                          website=self.settings['website'])
         except Exception as ex:
             self.set_status(403)
             return self.render_string('error.html',
@@ -449,4 +449,32 @@ class TopBrowserAndOs(BaseHandler):
             self.set_status(403)
             return self.render_string('error.html',
                                       error=ex)
+
+
+from tornado import gen
+from tornado.httpclient import AsyncHTTPClient
+import json
+
+
+class FacebookGraph(StatsHandler):
+    """
+       /stats/fb-shares
+    """
+    @gen.coroutine
+    def get(self):
+        http_client = AsyncHTTPClient()
+        # getting blog post
+        blog_post = self.get_json_argument('q')[0].decode()
+        response = yield http_client.fetch('http://graph.facebook.com/?id=' + self.settings['website']+blog_post)
+
+        try:
+            shares = json.loads(response.body.decode())['shares']
+        except KeyError:
+            shares = 0
+        except Exception as ex:
+            print(ex)
+            shares = 0
+
+        return self.render('webhandler/stats.html',
+                           stats=shares)
 

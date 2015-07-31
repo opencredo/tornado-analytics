@@ -3,7 +3,6 @@ import json
 import tornado.web
 from tornado import auth as tornado_auth
 from tornado import gen
-import settings
 from functools import partial, wraps
 from concurrent.futures import ThreadPoolExecutor
 
@@ -11,6 +10,31 @@ from utilities.cache import CacheMixin
 
 import logging
 logger = logging.getLogger(__name__)
+
+class StatsHandler(tornado.web.RequestHandler):
+    """A class to collect common handler methods - all other handlers should
+    subclass this one.
+    """
+
+    def get_json_argument(self, name, default=None):
+        """Find and return the argument with key 'name' from JSON request data.
+        Similar to Tornado's get_argument() method.
+        """
+        if default is None:
+            default = self._ARG_DEFAULT
+        if not self.request.arguments:
+            self.load_json()
+        if name not in self.request.arguments:
+            if default is self._ARG_DEFAULT:
+                msg = "Missing argument '%s'" % name
+                logger.debug(msg)
+                raise tornado.web.HTTPError(400, msg)
+            logger.debug("Returning default argument %s, as we couldn't find "
+                         "'%s' in %s" % (default, name, self.request.arguments))
+            return default
+        arg = self.request.arguments[name]
+        logger.debug("Found '%s': %s in JSON arguments" % (name, arg))
+        return arg
 
 
 class BaseHandler(CacheMixin, tornado.web.RequestHandler):

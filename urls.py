@@ -16,5 +16,6 @@ url_patterns = [
     (r"/total-users", web_handlers.TotalUsersHandler),
     (r"/referrers", web_handlers.ReferrersHandler),
     (r"/top-browser-n-os", web_handlers.TopBrowserAndOs),
+    (r"/stats/fb-shares", web_handlers.FacebookGraph)
 
 ]
