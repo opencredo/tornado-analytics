@@ -1,0 +1,40 @@
+<div id="data-box" class="box">
+
+    <div class="box-header with-border">
+        <h3 class="box-title">{{ table_title }}</h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+        <table class="table table-condensed table-bordered">
+            <tbody>
+            <tr>
+
+                <th> Path</th>
+                <th> Page views</th>
+                <th> Unique views</th>
+                <th> Avg. time on page</th>
+                <th> Bounces</th>
+                <th> Ent.</th>
+                <th> Exits</th>
+                <th><i class="fa fa-fw fa-facebook-official"></i></th>
+                <th><i class="fa fa-fw fa-twitter"></i></th>
+                <th><i class="fa fa-fw fa-linkedin"></i></th>
+            </tr>
+            {% for idx, row in enumerate(data) %}
+            <tr>
+
+                {% for value in row %}
+                <td>{{ value }}</td>
+                {% end %}
+                <td>
+                  <iframe class="center" src="/stats/fb-shares?q={{ row[0] }}" frameborder="0"></iframe>
+                </td>
+            </tr>
+
+            {% end %}
+
+            </tbody>
+        </table>
+    </div>
+    <!-- /.box-body -->
+</div>
