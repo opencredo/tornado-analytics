@@ -42,6 +42,7 @@ class TornadoApplication(tornado.web.Application):
                 settings["service_account_email"] = document["googleAnalyticsApi"]["serviceAccount"]
                 settings["ga_profile_id"] = document["googleAnalyticsApi"]["profileId"]
                 settings["start_days_ago"] = int(document["googleAnalyticsApi"]["startDaysAgo"])
+                settings["website"] = document["googleAnalyticsApi"]["website"]
                 key_file = document["googleAnalyticsApi"]["keyFileLocation"]
                 if not key_file or key_file == '':
                     settings["key_file_location"] = None
