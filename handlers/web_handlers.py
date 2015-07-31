@@ -7,24 +7,20 @@ from tornado import gen
 from utilities.common import get_linkedin_results, get_twitter_results, get_facebook_results
 
 
-
 class LoginPage(BaseHandler):
-
     @cache(1)
     def get(self):
         self.render('accounts/login.html')
 
 
 class MainHandler(BaseHandler):
-
     @web.authenticated
     @cache(1)
     def get(self):
-        self.render('index.html')
+        self.render('index.html', daysago=self.settings['start_days_ago'])
 
 
 class PeopleSourcesHandler(BaseHandler):
-
     @web.authenticated
     @cache(CACHE_EXPIRES)  # set the cache expires
     @unblock
@@ -91,7 +87,6 @@ class PeopleSourcesHandler(BaseHandler):
 
 
 class TopCountriesHandler(BaseHandler):
-
     @web.authenticated
     @cache(CACHE_EXPIRES)  # set the cache expires
     @unblock
@@ -141,10 +136,10 @@ class TopCountriesHandler(BaseHandler):
             return self.render_string('error.html',
                                       error=ex)
 
-class TopPagesHandler(BaseHandler):
 
+class TopPagesHandler(BaseHandler):
     @web.authenticated
-    @cache(1)  # set the cache expires
+    @cache(CACHE_EXPIRES)  # set the cache expires
     @gen.coroutine
     def get(self):
         """
@@ -210,7 +205,7 @@ class TopPagesHandler(BaseHandler):
                     m, s = divmod(int(float(row[3])), 60)
                     h, m = divmod(m, 60)
                     row[3] = "%d:%02d:%02d" % (h, m, s)
-                    urls.append(self.settings['website']+row[0])
+                    urls.append(self.settings['website'] + row[0])
 
                 facebook_shares, twitter_shares, linkedin_shares = yield [get_facebook_results(urls),
                                                                           get_twitter_results(urls),
@@ -223,12 +218,11 @@ class TopPagesHandler(BaseHandler):
                     row.append(linkedin_shares[idx])
 
                 table_title = 'Which posts are most popular?'
-                # not using this anymore
-                # headers = ['Path', 'Page views', 'Unique views', 'Avg. time on page', 'Bounces', 'Ent.', 'Exits']
+
                 return self.render('webhandler/top_pages.html',
-                                          data=data,
-                                          table_title=table_title,
-                                          website=self.settings['website'])
+                                   data=data,
+                                   table_title=table_title,
+                                   website=self.settings['website'])
         except Exception as ex:
             self.set_status(403)
             return self.render_string('error.html',
@@ -236,7 +230,6 @@ class TopPagesHandler(BaseHandler):
 
 
 class TopKeywordsHandler(BaseHandler):
-
     @web.authenticated
     @cache(CACHE_EXPIRES)  # set the cache expires
     @unblock
@@ -285,8 +278,8 @@ class TopKeywordsHandler(BaseHandler):
             return self.render_string('error.html',
                                       error=ex)
 
-class TotalUsersHandler(BaseHandler):
 
+class TotalUsersHandler(BaseHandler):
     @web.authenticated
     @cache(CACHE_EXPIRES)  # set the cache expires
     @unblock
@@ -328,8 +321,8 @@ class TotalUsersHandler(BaseHandler):
             return self.render_string('error.html',
                                       error=ex)
 
-class ReferrersHandler(BaseHandler):
 
+class ReferrersHandler(BaseHandler):
     @web.authenticated
     @cache(CACHE_EXPIRES)  # set the cache expires
     @unblock
@@ -405,7 +398,6 @@ class ReferrersHandler(BaseHandler):
 
 
 class TopBrowserAndOs(BaseHandler):
-
     @web.authenticated
     @cache(CACHE_EXPIRES)  # set the cache expires
     @unblock
@@ -466,7 +458,3 @@ class TopBrowserAndOs(BaseHandler):
             self.set_status(403)
             return self.render_string('error.html',
                                       error=ex)
-
-
-
-
