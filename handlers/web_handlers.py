@@ -1,11 +1,11 @@
-from handlers.base import BaseHandler, unblock, StatsHandler
+from handlers.base import BaseHandler, unblock
 from utilities.gaclient import GAcess
 from utilities.cache import cache
 from settings import CACHE_EXPIRES
 from tornado import web
 from tornado import gen
-from tornado.httpclient import AsyncHTTPClient
-import json
+from utilities.common import get_linkedin_results, get_twitter_results, get_facebook_results
+
 
 
 class LoginPage(BaseHandler):
@@ -144,8 +144,8 @@ class TopCountriesHandler(BaseHandler):
 class TopPagesHandler(BaseHandler):
 
     @web.authenticated
-    @cache(CACHE_EXPIRES)  # set the cache expires
-    @unblock
+    @cache(1)  # set the cache expires
+    @gen.coroutine
     def get(self):
         """
         Returns posts that are most popular.
@@ -212,10 +212,15 @@ class TopPagesHandler(BaseHandler):
                     row[3] = "%d:%02d:%02d" % (h, m, s)
                     urls.append(self.settings['website']+row[0])
 
-                facebook_shares = yield get_facebook_results(urls)
+                facebook_shares, twitter_shares, linkedin_shares = yield [get_facebook_results(urls),
+                                                                          get_twitter_results(urls),
+                                                                          get_linkedin_results(urls)]
+
                 # updating list
                 for idx, row in enumerate(data):
                     row.append(facebook_shares[idx])
+                    row.append(twitter_shares[idx])
+                    row.append(linkedin_shares[idx])
 
                 table_title = 'Which posts are most popular?'
                 # not using this anymore
@@ -464,47 +469,4 @@ class TopBrowserAndOs(BaseHandler):
 
 
 
-
-
-
-@gen.coroutine
-def get_facebook_results(urls):
-    http_client = AsyncHTTPClient()
-    futures_list = []
-    results = []
-    for url in urls:
-        futures_list.append(http_client.fetch("http://graph.facebook.com/?id="+url))
-    responses = yield futures_list
-    for response in responses:
-        try:
-            results.append(json.loads(response.body.decode('utf-8'))['shares'])
-        except KeyError:
-            results.append(0)
-        except Exception as ex:
-            print(ex)
-            results.append(0)
-    return results
-
-
-class FacebookGraph(StatsHandler):
-    """
-       /stats/fb-shares
-    """
-    @gen.coroutine
-    def get(self):
-        http_client = AsyncHTTPClient()
-        # getting blog post
-        blog_post = self.get_json_argument('q')[0].decode()
-        response = yield http_client.fetch('http://graph.facebook.com/?id=' + self.settings['website']+blog_post)
-
-        try:
-            shares = json.loads(response.body.decode())['shares']
-        except KeyError:
-            shares = 0
-        except Exception as ex:
-            print(ex)
-            shares = 0
-
-        return self.render('webhandler/stats.html',
-                           stats=shares)
 
