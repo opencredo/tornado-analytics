@@ -3,6 +3,10 @@ from utilities.gaclient import GAcess
 from utilities.cache import cache
 from settings import CACHE_EXPIRES
 from tornado import web
+from tornado import gen
+from tornado.httpclient import AsyncHTTPClient
+import json
+
 
 class LoginPage(BaseHandler):
 
@@ -200,15 +204,23 @@ class TopPagesHandler(BaseHandler):
             except KeyError:
                 self.set_status(400, reason='Failed to fetch top pages data')
             else:
-                # formatting seconds to more human readable version
+                # formatting seconds to more human readable version and creating urls list
+                urls = []
                 for row in data:
                     m, s = divmod(int(float(row[3])), 60)
                     h, m = divmod(m, 60)
                     row[3] = "%d:%02d:%02d" % (h, m, s)
+                    urls.append(self.settings['website']+row[0])
+
+                facebook_shares = yield get_facebook_results(urls)
+                # updating list
+                for idx, row in enumerate(data):
+                    row.append(facebook_shares[idx])
+
                 table_title = 'Which posts are most popular?'
                 # not using this anymore
                 # headers = ['Path', 'Page views', 'Unique views', 'Avg. time on page', 'Bounces', 'Ent.', 'Exits']
-                return self.render_string('webhandler/top_pages.html',
+                return self.render('webhandler/top_pages.html',
                                           data=data,
                                           table_title=table_title,
                                           website=self.settings['website'])
@@ -451,9 +463,27 @@ class TopBrowserAndOs(BaseHandler):
                                       error=ex)
 
 
-from tornado import gen
-from tornado.httpclient import AsyncHTTPClient
-import json
+
+
+
+
+@gen.coroutine
+def get_facebook_results(urls):
+    http_client = AsyncHTTPClient()
+    futures_list = []
+    results = []
+    for url in urls:
+        futures_list.append(http_client.fetch("http://graph.facebook.com/?id="+url))
+    responses = yield futures_list
+    for response in responses:
+        try:
+            results.append(json.loads(response.body.decode('utf-8'))['shares'])
+        except KeyError:
+            results.append(0)
+        except Exception as ex:
+            print(ex)
+            results.append(0)
+    return results
 
 
 class FacebookGraph(StatsHandler):
