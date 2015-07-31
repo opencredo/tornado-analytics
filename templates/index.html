@@ -5,7 +5,7 @@
 {% block body %}
 <section class="content-header">
     <h1>
-        Dashboard
+        Dashboard  (last {{ daysago }} days)
     </h1>
     <ol class="breadcrumb">
         <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -17,25 +17,25 @@
     <!-- Small boxes (Stat box) -->
     <div class="row">
         <div style="display:table" class="col-md-3">
-            <div id="peoplesources"></div>
+            <div id="peoplesources" style="width: 100%"></div>
         </div>
         <div style="display:table" class="col-md-2">
-            <div id="topcountries"></div>
-            <div id="totalusers"></div>
+            <div id="topcountries" style="width: 100%"></div>
+            <div id="totalusers" style="width: 100%"></div>
         </div>
         <div style="display:table" class="col-md-6">
-            <div id="toppages"></div>
+            <div id="toppages" style="width: 100%"></div>
         </div>
 
 
         <div style="display:table" class="col-md-3">
-            <div id="topkeywords"></div>
-        </div>
-        <div style="display:table" class="col-md-5">
-            <div id="referrers"></div>
+            <div id="topkeywords" style="width: 100%"></div>
         </div>
         <div style="display:table" class="col-md-4">
-            <div id="browsers-os"></div>
+            <div id="referrers" style="width: 100%"></div>
+        </div>
+        <div style="display:table" class="col-md-4">
+            <div id="browsers-os" style="width: 100%"></div>
         </div>
     </div>
 </section>
