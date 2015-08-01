@@ -207,21 +207,26 @@ class TopPagesHandler(BaseHandler):
                     row[3] = "%d:%02d:%02d" % (h, m, s)
                     urls.append(self.settings['website'] + row[0])
 
+                # getting social networks shares for our precious blog
                 facebook_shares, twitter_shares, linkedin_shares = yield [get_facebook_results(urls),
                                                                           get_twitter_results(urls),
                                                                           get_linkedin_results(urls)]
 
-                # updating list
+                # updating list with data
                 for idx, row in enumerate(data):
                     row.append(facebook_shares[idx])
                     row.append(twitter_shares[idx])
                     row.append(linkedin_shares[idx])
+                headers = ['Path', 'Page views', 'Unique views', 'Avg. time on page', 'Bounces', 'Ent.', 'Exits',
+                           '<i class="fa fa-fw fa-facebook-official"></i>', '<i class="fa fa-fw fa-twitter"></i>',
+                           '<i class="fa fa-fw fa-linkedin"></i>']
 
                 table_title = 'Which posts are most popular?'
 
-                return self.render('webhandler/top_pages.html',
+                return self.render('webhandler/data_table.html',
                                    data=data,
                                    table_title=table_title,
+                                   headers=headers,
                                    website=self.settings['website'])
         except Exception as ex:
             self.set_status(403)

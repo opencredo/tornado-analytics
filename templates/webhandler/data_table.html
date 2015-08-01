@@ -9,7 +9,7 @@
             <tr>
                 {% for header in headers %}
                     {% if header != '' %}
-                        <th> {{ header }}</th>
+                        <th> {% raw header %}</th>
                     {% end %}
                 {% end %}
             </tr>
