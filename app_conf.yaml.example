@@ -13,6 +13,7 @@ googleAnalyticsApi:
     profileId: '__your_profile__id'
     startDaysAgo: 7
     keyFileLocation: ''
+    website: "https://www.opencredo.com"
 
 # application credentials from APIs & auth > credentials > Client ID for native application
 # key represents "Client ID", secret is "Client secret". Oauth module expects to find "google_oauth" in app settings
