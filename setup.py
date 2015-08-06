@@ -18,7 +18,8 @@ setup(name='tornado-analytics',
           'PyOpenSSL',
           'redis',
           'PyYAML',
-          'certifi'
+          'certifi',
+          'simple-salesforce '
       ],
       tests_require=[
           'pytest>=2.6.0',
