@@ -29,6 +29,7 @@ class SFAccess:
 
     @gen.coroutine
     def get_report(self, report_id=None):
+        # TODO: split into several methods, separate downloading and processing
         if report_id is not None:
             # check if we have logged in
             if self.session is None:
