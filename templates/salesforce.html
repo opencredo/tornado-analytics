@@ -48,7 +48,8 @@
                             {{ name }}
                         </td>
                         {% for code, value in sorted(values.items()) %}
-                           <td>{{ value }}</td>
+                           <td {% if value < 50 %} bgcolor="#E60000"
+                               {% elif value < 80 %} bgcolor="#FF9900" {% end %} >{{ value }}%</td>
                         {% end %}
 
                     </tr>

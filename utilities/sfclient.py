@@ -151,10 +151,12 @@ def create_final_report(raw_report, time_dict, employee_dict):
         # get full name from value {'group_key': '1', 'group_name': 'Employee', 'name': 'Karolis Rusenas'}
         employee_full_name = employee_dict[empl_key]['name']
         # getting utilisation
-        utilisation = value['aggregates'][0]['label']
+        utilisation = value['aggregates'][0]['value']
         # check for Nones
-        if utilisation == "-":
-            utilisation = '0.00%'
+        if utilisation == "None" or utilisation is None:
+            utilisation = '0.00'
+
+        utilisation = float("{0:.2f}".format(float(utilisation)))
 
         # check if employee is not in dictionary
         if employee_full_name not in body_employee_records.keys():
