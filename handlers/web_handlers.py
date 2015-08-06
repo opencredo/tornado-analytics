@@ -5,6 +5,7 @@ from settings import CACHE_EXPIRES
 from tornado import web
 from tornado import gen
 from utilities.common import get_linkedin_results, get_twitter_results, get_facebook_results
+from utilities.sfclient import SFAccess
 
 
 class LoginPage(BaseHandler):
@@ -463,3 +464,17 @@ class TopBrowserAndOs(BaseHandler):
             self.set_status(403)
             return self.render_string('error.html',
                                       error=ex)
+
+
+class SFHandler(BaseHandler):
+    @web.authenticated
+    @cache(300)
+    @gen.coroutine
+    def get(self):
+        sf_obj = SFAccess(self.settings)
+        report_data = yield sf_obj.get_report('00O240000027qtO')
+
+        return self.render('salesforce.html',
+                           body=report_data['body'],
+                           title=report_data['title'],
+                           headers=report_data['headers'])
