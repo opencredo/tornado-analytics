@@ -22,3 +22,10 @@ googleOAuth:
     key: '__your_client_key__'
     secret: '__your_client_secret__'
     allowedDomain: '__your_domain__'
+
+# your application salesforce details goes here. To get your account working you will probably have to make four steps.
+# try logging in with that account and accessing report, it may take some time until you get it working!
+salesForce:
+    sfUser: "email_name@mail.com"
+    sfPsw: "account_password"
+    sfToken: "security_token"
