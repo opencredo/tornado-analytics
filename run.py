@@ -67,6 +67,15 @@ class TornadoApplication(tornado.web.Application):
                 print("Check your googleOAuth details: %s" % ex)
                 sys.exit(1)
 
+            # get Salesforce details
+            try:
+                sf_data = document["salesForce"]
+                for key, value in sf_data.items():
+                    settings[key] = value
+
+            except KeyError:
+                print("Failed to get Salesforce login details, dashboard may not be available")
+
         tornado.web.Application.__init__(self, url_patterns, **settings)
 
 

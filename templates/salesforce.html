@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}Salesforce Dashboard{% end %}
+
+{% block body %}
+<section class="content-header">
+    <h1>
+        Salesforce Reports
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Salesforce reports</li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-6">
+        <!-- Small boxes (Stat box) -->
+
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title"> {{ title }}</h3>
+                </div>
+                <!-- /.box-header -->
+                <table id="utilisation" class="table table-condensed table-bordered">
+                    <thead>
+                    <tr>
+                        <th>
+                            Name
+                        </th>
+
+                        {% for header in headers %}
+                        {% if header != '' %}
+                        <th> {% raw header %}</th>
+                        {% end %}
+                        {% end %}
+                        <th>
+                            Total
+                        </th>
+                    </tr>
+
+                    </thead>
+                    <tbody>
+                    {% for name, values in body.items() %}
+                    <tr>
+                        <td>
+                            {{ name }}
+                        </td>
+                        {% for code, value in sorted(values.items()) %}
+                           <td>{{ value }}</td>
+                        {% end %}
+
+                    </tr>
+                    {% end %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+{% end body %}
+{% block endjs %}
+<!-- DATA TABES SCRIPT -->
+<script src="/static/AdminLTE/plugins/datatables/js/jquery.dataTables.js" type="text/javascript"></script>
+<script src="/static/AdminLTE/plugins/datatables/dataTables.bootstrap.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+    $(function () {
+        $('#utilisation').dataTable({
+            "bPaginate": false,
+            "bLengthChange": true,
+            "bFilter": true,
+            "bSort": true,
+            "bInfo": true,
+            "bAutoWidth": false
+        });
+    });
+</script>
+
+{% end endjs %}
