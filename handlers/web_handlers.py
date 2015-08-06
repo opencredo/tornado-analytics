@@ -231,8 +231,8 @@ class TopPagesHandler(BaseHandler):
                                    website=self.settings['website'])
         except Exception as ex:
             self.set_status(403)
-            return self.render_string('error.html',
-                                      error=ex)
+            return self.render('error.html',
+                               error=ex)
 
 
 class TopKeywordsHandler(BaseHandler):
