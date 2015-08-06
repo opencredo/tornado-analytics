@@ -16,4 +16,6 @@ url_patterns = [
     (r"/total-users", web_handlers.TotalUsersHandler),
     (r"/referrers", web_handlers.ReferrersHandler),
     (r"/top-browser-n-os", web_handlers.TopBrowserAndOs),
+    # Salesforce patterns begin here
+    (r"/sf", web_handlers.SFHandler),
 ]
