@@ -83,6 +83,11 @@ class TornadoApplication(tornado.web.Application):
                         settings[key] = value
             except Exception as ex:
                 print("Failed to get Salesforce report details: %s" % ex)
+
+            # get report whitelist
+            if 'salesForceWhitelist' in document:
+                settings['sFwhitelist'] = document['salesForceWhitelist']
+
         tornado.web.Application.__init__(self, url_patterns, **settings)
 
 
