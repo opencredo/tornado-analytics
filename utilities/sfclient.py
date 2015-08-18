@@ -76,6 +76,19 @@ class SFAccess:
                                                        employee_dict=employee_key_dict)
         return final_report
 
+    @gen.coroutine
+    def get_billability_groupings_report(self, report_id):
+        data = yield self.get_report(report_id)
+        # getting useful date range dictionary
+        date_range_dict = get_time_range(data)
+        # getting final report
+        groups = get_groups(data)
+
+        final_report = create_sub_totals_report(raw_report=data,
+                                                time_dict=date_range_dict,
+                                                group_dict=groups)
+        return final_report
+
 def get_groups(report):
     if 'groupingsDown' in report:
         result_dict = {}
