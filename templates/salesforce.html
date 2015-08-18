@@ -17,7 +17,7 @@
     <div class="row">
         <div class="col-md-4">
         <!-- Small boxes (Stat box) -->
-
+           {% if data["utilisation_data"] != None %}
             <div class="box">
                 <div class="box-header">
                     <h3 class="box-title"> {{ data["utilisation_data"]["title"] }}</h3>
@@ -58,11 +58,25 @@
                     </tbody>
                 </table>
             </div>
+            {% else %}
+                <div class="box box-danger">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Report not available</h3>
+                        <div class="box-tools pull-right">
+                            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div><!-- /.box-tools -->
+                    </div><!-- /.box-header -->
+                    <div class="box-body">
+                        Utilisation data is not available. Check report ID in your configuration file or Salesforce
+                        account details.
+                    </div><!-- /.box-body -->
+                </div>
+            {% end %}
         </div>
 
         <div class="col-md-8">
+            {% if data["consultant_bilability"] != None %}
             <!-- Small boxes (Stat box) -->
-
             <div class="box">
                 <div class="box-header">
                     <h3 class="box-title"> {{ data["consultant_bilability"]["title"] }}</h3>
@@ -110,6 +124,20 @@
                     </tbody>
                 </table>
             </div>
+            {% else %}
+            <div class="box box-danger">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Report not available</h3>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div><!-- /.box-tools -->
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    Billability data is not available. Check report ID in your configuration file or Salesforce
+                    account details.
+                </div><!-- /.box-body -->
+            </div>
+            {% end %}
         </div>
 
 
