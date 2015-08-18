@@ -150,6 +150,65 @@
 <!-- DATA TABES SCRIPT -->
 <script src="/static/AdminLTE/plugins/datatables/js/jquery.dataTables.js" type="text/javascript"></script>
 <script src="/static/AdminLTE/plugins/datatables/dataTables.bootstrap.js" type="text/javascript"></script>
+<script>
+    $(function () {
+        $('#container').highcharts({
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Monthly Earned Revenue By Group'
+            },
+            subtitle: {
+                text: 'Source: Salesforce API'
+            },
+            xAxis: {
+                categories: [
+                {% for header in data["consultant_bilability"]["headers"] %}
+                    '{{ header }}',
+                {% end %}
+                ],
+                crosshair: true
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: '{{ data["consultant_bilability"]["meta"]["currency"] }}'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y:.1f} {{ data["consultant_bilability"]["meta"]["currency"] }}</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: [
+            {% for group, group_data in data["consultant_bilability"]["body"].items() %}
+                {% if group != 'Grand Total' %}
+                    {
+                        name: '{{ group }}',
+                        data: [
+                            {% for month, values in sorted(group_data.items()) %}
+                                {% if month != "T" %}
+                                    {{ values[1]['value'] }},
+                                {% end %}
+                            {% end %}
+                        ]
+                    },
+                {% end %}
+            {% end %}
+            ]
+        });
+    });
+</script>
 <script type="text/javascript">
 
     $(function () {
