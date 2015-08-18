@@ -184,6 +184,57 @@ def create_final_billability_report(raw_report, time_dict, employee_dict):
     return result_dict
 
 
+def create_sub_totals_report(raw_report, time_dict, group_dict):
+    result_dict = {}
+    # create headers for the report
+    headers = []
+    for key, value in sorted(time_dict.items()):
+        headers.append(value['label'])
+    result_dict['headers'] = headers
+
+    # add title
+    result_dict['title'] = raw_report['attributes']['reportName']
+
+    # report metadata - column descriptions and currency
+    column_info = collections.OrderedDict(sorted(raw_report['reportExtendedMetadata']['aggregateColumnInfo'].items()))
+    columns = []
+    for _, v in column_info.items():
+        columns.append(v['label'])
+    meta = {
+        'column_info': columns,
+        'currency': raw_report['reportMetadata']['currency']
+    }
+    result_dict['meta'] = meta
+
+    # create body for the report
+    body_employee_records = {}
+
+    for key, value in raw_report['factMap'].items():
+
+        empl_key, code = key.split('!')
+        # if there is no '_' symbol in key - this is group statistic then
+        if '_' in empl_key:
+            continue
+
+        # get full name from value {'group_key': '1', 'group_name': 'Employee', 'name': 'Karolis Rusenas'}
+        employee_full_name = group_dict[empl_key]
+        # getting utilisation
+        aggregates = value['aggregates']
+
+        # check if employee is not in dictionary
+        if employee_full_name not in body_employee_records.keys():
+            # creating name in dictionary and assign empty list
+            body_employee_records[employee_full_name] = {code: aggregates}
+
+        # append new rows with billability
+        else:
+            current_dict = body_employee_records[employee_full_name]
+            current_dict[code] = aggregates
+            body_employee_records[employee_full_name] = current_dict
+
+    result_dict['body'] = body_employee_records
+    return result_dict
+
 
 def create_final_util_report(raw_report, time_dict, employee_dict):
     """
