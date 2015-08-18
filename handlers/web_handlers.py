@@ -493,3 +493,25 @@ class SFHandler(BaseHandler):
         }
         return self.render('salesforce.html', data=data)
 
+
+class SFHandlerBillDetailed(BaseHandler):
+    @web.authenticated
+    @allowed()
+    @cache(1)
+    @gen.coroutine
+    def get(self):
+        sf_obj = SFAccess(self.settings)
+        # checking whether report IDs were supplied
+        if "consultantBillability" not in self.settings:
+            return self.render('500.html',
+                               code=500,
+                               error="consultantBillability report ID was "
+                                     "not found in configuration")
+
+        consultant_bilability = \
+            yield sf_obj.get_billability_report(self.settings["consultantBillability"])
+
+        data = {
+            "consultant_bilability": consultant_bilability
+        }
+        return self.render('sf_billability_detailed.html', data=data)
