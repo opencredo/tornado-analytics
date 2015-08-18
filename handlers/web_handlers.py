@@ -468,8 +468,8 @@ class TopBrowserAndOs(BaseHandler):
 
 class SFHandler(BaseHandler):
     @web.authenticated
-    @cache(300)
     @allowed()
+    @cache(60)
     @gen.coroutine
     def get(self):
         sf_obj = SFAccess(self.settings)
@@ -497,7 +497,7 @@ class SFHandler(BaseHandler):
 class SFHandlerBillDetailed(BaseHandler):
     @web.authenticated
     @allowed()
-    @cache(1)
+    @cache(60)
     @gen.coroutine
     def get(self):
         sf_obj = SFAccess(self.settings)
