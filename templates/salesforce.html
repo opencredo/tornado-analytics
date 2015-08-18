@@ -59,6 +59,60 @@
                 </table>
             </div>
         </div>
+
+        <div class="col-md-8">
+            <!-- Small boxes (Stat box) -->
+
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title"> {{ data["consultant_bilability"]["title"] }}</h3>
+                </div>
+                <!-- /.box-header -->
+                <table id="billability" class="table table-condensed table-bordered">
+                    <thead>
+                    <tr>
+                        <th>
+                            Name
+                        </th>
+
+                        {% for header in data["consultant_bilability"]["headers"] %}
+                        {% if header != '' %}
+                        <th> {% raw header %}</th>
+                        {% end %}
+                        {% end %}
+                        <th>
+                            Total
+                        </th>
+                    </tr>
+
+                    </thead>
+                    <tbody>
+                    {% for name, values in data["consultant_bilability"]["body"].items() %}
+                    <tr>
+                        <td>
+                            {{ name }}
+                        </td>
+                        {% for code, aggregates in sorted(values.items()) %}
+                           <td> {% for i, dict in enumerate(aggregates) %}
+                                       {% if dict is not None %}
+                                           <!-- HTML to write -->
+                                           <a href="#" data-toggle="tooltip" title='{{ data["consultant_bilability"]["meta"]["column_info"][i] }}'>{{ dict["label"] }}</a>
+                                           <br>
+                                       {% end %}
+
+                                {% end %}
+                           </td>
+                        {% end %}
+
+                    </tr>
+                    {% end %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
     </div>
 
 </section>
