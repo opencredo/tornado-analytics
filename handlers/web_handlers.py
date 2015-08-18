@@ -1,4 +1,3 @@
-from handlers.base import BaseHandler, unblock
 from handlers.base import BaseHandler, unblock, allowed
 from utilities.gaclient import GAcess
 from utilities.cache import cache
