@@ -15,12 +15,12 @@
 <!-- Main content -->
 <section class="content">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4">
         <!-- Small boxes (Stat box) -->
 
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title"> {{ title }}</h3>
+                    <h3 class="box-title"> {{ data["utilisation_data"]["title"] }}</h3>
                 </div>
                 <!-- /.box-header -->
                 <table id="utilisation" class="table table-condensed table-bordered">
@@ -30,7 +30,7 @@
                             Name
                         </th>
 
-                        {% for header in headers %}
+                        {% for header in data["utilisation_data"]["headers"] %}
                         {% if header != '' %}
                         <th> {% raw header %}</th>
                         {% end %}
@@ -42,7 +42,7 @@
 
                     </thead>
                     <tbody>
-                    {% for name, values in body.items() %}
+                    {% for name, values in data["utilisation_data"]["body"].items() %}
                     <tr>
                         <td>
                             {{ name }}
