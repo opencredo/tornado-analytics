@@ -106,26 +106,47 @@
                     </thead>
                     <tbody>
                     {% for name, values in data["group_billability"]["body"].items() %}
-                    <tr>
-                        <td>
-                            {{ name }}
-                        </td>
-                        {% for code, aggregates in sorted(values.items()) %}
-                           <td> {% for i, dict in enumerate(aggregates) %}
-                                       {% if dict is not None %}
-                                           <!-- HTML to write -->
-                                           <a href="#" data-toggle="tooltip" title='{{ data["group_billability"]["meta"]["column_info"][i] }}'>{{ dict["label"] }}</a>
-                                           <br>
-                                       {% end %}
+                         {% if name != "Grand Total" %}
+                            <tr>
+                                <td>
+                                    {{ name }}
+                                </td>
+                                {% for code, aggregates in sorted(values.items()) %}
+                                   <td> {% for i, dict in enumerate(aggregates) %}
+                                               {% if dict is not None %}
+                                                   <!-- HTML to write -->
+                                                   <a href="#" data-toggle="tooltip" title='{{ data["group_billability"]["meta"]["column_info"][i] }}'>{{ dict["label"] }}</a>
+                                                   <br>
+                                               {% end %}
 
+                                        {% end %}
+                                   </td>
                                 {% end %}
-                           </td>
+
+                            </tr>
+                        {% end %}
+                    {% end %}
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <th>
+                            Grand Total
+                        </th>
+                        {% for code, aggregates in sorted(data["group_billability"]["body"]["Grand Total"].items()) %}
+                        <th> {% for i, dict in enumerate(aggregates) %}
+                            {% if dict is not None %}
+                            <!-- HTML to write -->
+                            <a href="#" data-toggle="tooltip" title='{{ data["group_billability"]["meta"]["column_info"][i] }}'>{{ dict["label"] }}</a>
+                            <br>
+                            {% end %}
+
+                            {% end %}
+                        </th>
                         {% end %}
 
                     </tr>
-                    {% end %}
 
-                    </tbody>
+                    </tfoot>
                 </table>
             </div>
             {% else %}
@@ -231,7 +252,7 @@
 
     $(function () {
         $('#billability').dataTable({
-            "bPaginate": true,
+            "bPaginate": false,
             "bLengthChange": true,
             "bFilter": true,
             "bSort": true,
