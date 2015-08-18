@@ -117,6 +117,12 @@ class AuthLogoutHandler(BaseHandler):
 
 
 def allowed():
+    """
+
+    Decorator for checking whether current user is whitelisted or not.
+    :return: :raise Exception:
+    """
+
     def decorator(func):
         def decorated(self, *args, **kwargs):
             user = self.get_current_user()
@@ -130,10 +136,6 @@ def allowed():
                 return self.render('500.html',
                                    code=403,
                                    error="Not authorized")
-                # self.set_status(403, reason='Not authorized. Contact administrator.')
-                # self._transforms = []
-                # self.finish()
-                # return None
 
             return func(self, *args, **kwargs)
         return decorated
