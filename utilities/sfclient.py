@@ -76,6 +76,22 @@ class SFAccess:
                                                        employee_dict=employee_key_dict)
         return final_report
 
+def get_groups(report):
+    if 'groupingsDown' in report:
+        result_dict = {}
+        people_groupings = report['groupingsDown']['groupings']
+        for people_group in people_groupings:
+            group_name = people_group['label']
+            group_key = people_group['key']
+            result_dict[group_key] = group_name
+
+        result_dict['T'] = 'Grand Total'
+        return result_dict
+    else:
+        raise KeyError("groupingsDown key was not found in your report")
+
+
+
 def get_time_range(report):
     """
     Provide date ranges. Keys should be sorted in ascending order
