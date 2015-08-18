@@ -116,6 +116,29 @@ class AuthLogoutHandler(BaseHandler):
             self.redirect(self.get_argument("next", "/"))
 
 
+def allowed():
+    def decorator(func):
+        def decorated(self, *args, **kwargs):
+            user = self.get_current_user()
+
+            # User is refused
+            if user is None:
+                raise Exception('Cannot proceed role check: user not found')
+
+            if user.decode("utf-8") not in self.settings['sFwhitelist']:
+                self.set_status(403)
+                return self.render('500.html',
+                                   code=403,
+                                   error="Not authorized")
+                # self.set_status(403, reason='Not authorized. Contact administrator.')
+                # self._transforms = []
+                # self.finish()
+                # return None
+
+            return func(self, *args, **kwargs)
+        return decorated
+    return decorator
+
 EXECUTOR = ThreadPoolExecutor(max_workers=100)
 
 def unblock(f):
