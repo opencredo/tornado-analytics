@@ -72,10 +72,17 @@ class TornadoApplication(tornado.web.Application):
                 sf_data = document["salesForce"]
                 for key, value in sf_data.items():
                     settings[key] = value
-
             except KeyError:
                 print("Failed to get Salesforce login details, dashboard may not be available")
 
+            # get report IDs
+            try:
+                if "salesForceReports" in document:
+                    sf_reports = document["salesForceReports"]
+                    for key, value in sf_reports.items():
+                        settings[key] = value
+            except Exception as ex:
+                print("Failed to get Salesforce report details: %s" % ex)
         tornado.web.Application.__init__(self, url_patterns, **settings)
 
 
