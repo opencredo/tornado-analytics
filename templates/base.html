@@ -116,14 +116,11 @@ desired effect
             <!-- Sidebar Menu -->
             <ul class="sidebar-menu">
                 <!-- Optionally, you can add icons to the links -->
+                <li class=" {% if '/' == request.path %} active {% end %}"><a
+                        href="/"><span>Google Analytics</span></a></li>
 
-                <li class=""><a href="/"><span>Home</span></a></li>
-
-                                <li class=" {% if '/' == request.path %} active {% end %}"><a
-                                        href="/"><span>Google Analytics</span></a></li>
-
-                                <li class=" {% if 'sf' in request.path %} active {% end %}"><a
-                                        href="/sf"><span>Salesforce</span></a></li>
+                <li class=" {% if 'sf' in request.path %} active {% end %}"><a
+                        href="/sf"><span>Salesforce</span></a></li>
             </ul>
             <!-- /.sidebar-menu -->
         </section>
