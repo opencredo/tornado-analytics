@@ -45,21 +45,23 @@ class SFAccess:
             # result here brings whole report and you need to decode it then
             # https://developer.salesforce.com/docs/atlas.en-us.api_analytics.meta/api_analytics/sforce_analytics_rest_api_factmap_example.htm
             data = json.loads(result.body.decode("utf-8"))
-
-            # getting useful date range dictionary
-            date_range_dict = get_time_range(data)
-            # getting employee names and keys
-            employee_key_dict = get_employee_names(data)
-
-            # getting final report
-            final_report = create_final_report(raw_report=data,
-                                               time_dict=date_range_dict,
-                                               employee_dict=employee_key_dict)
-            return final_report
-
+            return data
         else:
             raise ValueError("You must provide report_id")
 
+    @gen.coroutine
+    def get_utilisation_report(self, report_id):
+        data = yield self.get_report(report_id)
+        # getting useful date range dictionary
+        date_range_dict = get_time_range(data)
+        # getting employee names and keys
+        employee_key_dict = get_employee_names(data)
+
+        # getting final report
+        final_report = create_final_util_report(raw_report=data,
+                                                time_dict=date_range_dict,
+                                                employee_dict=employee_key_dict)
+        return final_report
 
 def get_time_range(report):
     """
