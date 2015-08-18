@@ -1,4 +1,5 @@
 from handlers.base import BaseHandler, unblock
+from handlers.base import BaseHandler, unblock, allowed
 from utilities.gaclient import GAcess
 from utilities.cache import cache
 from settings import CACHE_EXPIRES
@@ -469,6 +470,7 @@ class TopBrowserAndOs(BaseHandler):
 class SFHandler(BaseHandler):
     @web.authenticated
     @cache(300)
+    @allowed()
     @gen.coroutine
     def get(self):
         sf_obj = SFAccess(self.settings)
@@ -476,8 +478,9 @@ class SFHandler(BaseHandler):
         # checking whether report IDs were supplied
         if "consultantUtilisation" not in self.settings or "consultantBillability" not in self.settings:
             return self.render('500.html',
-                                      error="consultantUtilisation or consultantBillability report IDs were "
-                                            "not found in configuration")
+                               code=500,
+                               error="consultantUtilisation or consultantBillability report IDs were "
+                                     "not found in configuration")
 
         coroutine_list.append(sf_obj.get_utilisation_report(self.settings["consultantUtilisation"]))
 
