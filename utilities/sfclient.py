@@ -63,6 +63,19 @@ class SFAccess:
                                                 employee_dict=employee_key_dict)
         return final_report
 
+    @gen.coroutine
+    def get_billability_report(self, report_id):
+        data = yield self.get_report(report_id)
+        # getting useful date range dictionary
+        date_range_dict = get_time_range(data)
+        # getting employee names and keys
+        employee_key_dict = get_employee_names(data)
+        # getting final report
+        final_report = create_final_billability_report(raw_report=data,
+                                                       time_dict=date_range_dict,
+                                                       employee_dict=employee_key_dict)
+        return final_report
+
 def get_time_range(report):
     """
     Provide date ranges. Keys should be sorted in ascending order
