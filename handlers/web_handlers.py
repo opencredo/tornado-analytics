@@ -473,21 +473,21 @@ class SFHandler(BaseHandler):
     def get(self):
         sf_obj = SFAccess(self.settings)
         coroutine_list = []
-        
         # checking whether report IDs were supplied
-        if "consultantUtilisation" in self.settings:
-            coroutine_list.append(sf_obj.get_utilisation_report(self.settings["consultantUtilisation"]))
-        if "consultantBillability" in self.settings:
-            coroutine_list.append(sf_obj.get_billability_report(self.settings["consultantBillability"]))
-        if coroutine_list:
-            utilisation_data, consultant_bilability = yield coroutine_list
-
-            data = {
-                "utilisation_data": utilisation_data,
-                "consultant_bilability": consultant_bilability
-            }
-            return self.render('salesforce.html', data=data)
-        else:
-            return self.render_string('error.html',
-                                      error="consultantUtilisation and consultantBillability report IDs were "
+        if "consultantUtilisation" not in self.settings or "consultantBillability" not in self.settings:
+            return self.render('500.html',
+                                      error="consultantUtilisation or consultantBillability report IDs were "
                                             "not found in configuration")
+
+        coroutine_list.append(sf_obj.get_utilisation_report(self.settings["consultantUtilisation"]))
+
+        coroutine_list.append(sf_obj.get_billability_report(self.settings["consultantBillability"]))
+
+        utilisation_data, consultant_bilability = yield coroutine_list
+
+        data = {
+            "utilisation_data": utilisation_data or None,
+            "consultant_bilability": consultant_bilability or None
+        }
+        return self.render('salesforce.html', data=data)
+
