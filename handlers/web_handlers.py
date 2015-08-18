@@ -483,13 +483,13 @@ class SFHandler(BaseHandler):
 
         coroutine_list.append(sf_obj.get_utilisation_report(self.settings["consultantUtilisation"]))
 
-        coroutine_list.append(sf_obj.get_billability_report(self.settings["consultantBillability"]))
+        coroutine_list.append(sf_obj.get_billability_groupings_report(self.settings["consultantBillability"]))
 
-        utilisation_data, consultant_bilability = yield coroutine_list
+        utilisation_data, group_billability = yield coroutine_list
 
         data = {
             "utilisation_data": utilisation_data or None,
-            "consultant_bilability": consultant_bilability or None
+            "group_billability": group_billability or None
         }
         return self.render('salesforce.html', data=data)
 

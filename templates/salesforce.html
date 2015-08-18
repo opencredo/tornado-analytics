@@ -79,11 +79,11 @@
                 <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
             </div>
             <div class="row">
-            {% if data["consultant_bilability"] != None %}
+            {% if data["group_billability"] != None %}
             <!-- Small boxes (Stat box) -->
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title"> {{ data["consultant_bilability"]["title"] }}</h3>
+                    <h3 class="box-title"> {{ data["group_billability"]["title"] }}</h3>
                 </div>
                 <!-- /.box-header -->
                 <table id="billability" class="table table-condensed table-bordered">
@@ -93,7 +93,7 @@
                             Name
                         </th>
 
-                        {% for header in data["consultant_bilability"]["headers"] %}
+                        {% for header in data["group_billability"]["headers"] %}
                         {% if header != '' %}
                         <th> {% raw header %}</th>
                         {% end %}
@@ -105,7 +105,7 @@
 
                     </thead>
                     <tbody>
-                    {% for name, values in data["consultant_bilability"]["body"].items() %}
+                    {% for name, values in data["group_billability"]["body"].items() %}
                     <tr>
                         <td>
                             {{ name }}
@@ -114,7 +114,7 @@
                            <td> {% for i, dict in enumerate(aggregates) %}
                                        {% if dict is not None %}
                                            <!-- HTML to write -->
-                                           <a href="#" data-toggle="tooltip" title='{{ data["consultant_bilability"]["meta"]["column_info"][i] }}'>{{ dict["label"] }}</a>
+                                           <a href="#" data-toggle="tooltip" title='{{ data["group_billability"]["meta"]["column_info"][i] }}'>{{ dict["label"] }}</a>
                                            <br>
                                        {% end %}
 
@@ -167,7 +167,7 @@
             },
             xAxis: {
                 categories: [
-                {% for header in data["consultant_bilability"]["headers"] %}
+                {% for header in data["group_billability"]["headers"] %}
                     '{{ header }}',
                 {% end %}
                 ],
@@ -176,13 +176,13 @@
             yAxis: {
                 min: 0,
                 title: {
-                    text: '{{ data["consultant_bilability"]["meta"]["currency"] }}'
+                    text: '{{ data["group_billability"]["meta"]["currency"] }}'
                 }
             },
             tooltip: {
                 headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
                 pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.1f} {{ data["consultant_bilability"]["meta"]["currency"] }}</b></td></tr>',
+                '<td style="padding:0"><b>{point.y:.1f} {{ data["group_billability"]["meta"]["currency"] }}</b></td></tr>',
                 footerFormat: '</table>',
                 shared: true,
                 useHTML: true
@@ -194,7 +194,7 @@
                 }
             },
             series: [
-            {% for group, group_data in data["consultant_bilability"]["body"].items() %}
+            {% for group, group_data in data["group_billability"]["body"].items() %}
                 {% if group != 'Grand Total' %}
                     {
                         name: '{{ group }}',
