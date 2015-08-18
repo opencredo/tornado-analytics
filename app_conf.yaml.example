@@ -29,3 +29,6 @@ salesForce:
     sfUser: "email_name@mail.com"
     sfPsw: "account_password"
     sfToken: "security_token"
+salesForceReports:
+    consultantUtilisation: "report_id_from_url"
+    consultantBillability: "report_id_from_url"
