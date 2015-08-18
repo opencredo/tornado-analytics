@@ -32,3 +32,5 @@ salesForce:
 salesForceReports:
     consultantUtilisation: "report_id_from_url"
     consultantBillability: "report_id_from_url"
+
+salesForceWhitelist: ["some_user@email.com", "another_user@gmail.com"]
