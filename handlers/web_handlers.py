@@ -472,9 +472,11 @@ class SFHandler(BaseHandler):
     @gen.coroutine
     def get(self):
         sf_obj = SFAccess(self.settings)
-        report_data = yield sf_obj.get_report('00O240000027qtO')
+        utilisation_data, consultant_bilability = yield [sf_obj.get_utilisation_report(self.settings["consultantUtilisation"]),
+                                                         sf_obj.get_billability_report(self.settings["consultantBillability"])]
 
-        return self.render('salesforce.html',
-                           body=report_data['body'],
-                           title=report_data['title'],
-                           headers=report_data['headers'])
+        data = {
+            "utilisation_data": utilisation_data,
+            "consultant_bilability": consultant_bilability
+        }
+        return self.render('salesforce.html', data=data)
