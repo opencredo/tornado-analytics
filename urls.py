@@ -18,4 +18,5 @@ url_patterns = [
     (r"/top-browser-n-os", web_handlers.TopBrowserAndOs),
     # Salesforce patterns begin here
     (r"/sf", web_handlers.SFHandler),
+    (r"/sf/billability/detailed", web_handlers.SFHandlerBillDetailed),
 ]

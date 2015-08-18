@@ -29,6 +29,8 @@
     <![endif]-->
     <!-- jQuery 2.1.3 -->
     <script src="/static/AdminLTE/plugins/jQuery/jQuery-2.1.3.min.js"></script>
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js"></script>
 </head>
 <!--
 BODY TAG OPTIONS:
@@ -50,7 +52,7 @@ desired effect
 |---------------------------------------------------------|
 
 -->
-<body class="skin-blue sidebar-collapse">
+<body class="skin-blue">
 <div class="wrapper">
 
     <!-- Main Header -->
@@ -119,8 +121,12 @@ desired effect
                 <li class=" {% if '/' == request.path %} active {% end %}"><a
                         href="/"><span>Google Analytics</span></a></li>
 
-                <li class=" {% if 'sf' in request.path %} active {% end %}"><a
+                <li class=" {% if '/sf' == request.path %} active {% end %}"><a
                         href="/sf"><span>Salesforce</span></a></li>
+
+                <li class=" {% if '/sf/billability/detailed' == request.path %} active {% end %}"><a
+                        href="/sf/billability/detailed"><span>Salesforce billability detailed</span></a></li>
+
             </ul>
             <!-- /.sidebar-menu -->
         </section>
