@@ -408,39 +408,6 @@ class TopBrowserAndOs(BaseHandler):
     @cache(CACHE_EXPIRES)  # set the cache expires
     @unblock
     def get(self):
-        """
-        Returns your users top browsers and operating systems
-
-        example:
-        headers:
-        "columnHeaders": [
-              {
-               "name": "ga:operatingSystem",
-               "columnType": "DIMENSION",
-               "dataType": "STRING"
-              },
-              {
-               "name": "ga:operatingSystemVersion",
-               "columnType": "DIMENSION",
-               "dataType": "STRING"
-              },
-              {
-               "name": "ga:browser",
-               "columnType": "DIMENSION",
-               "dataType": "STRING"
-              },
-              {
-               "name": "ga:browserVersion",
-               "columnType": "DIMENSION",
-               "dataType": "STRING"
-              },
-              {
-               "name": "ga:sessions",
-               "columnType": "METRIC",
-               "dataType": "INTEGER"
-              }
-        :return:
-        """
         try:
             service_account = self.settings['service_account_email']
             self.service = GAcess(service_account_email=service_account,
