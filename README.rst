@@ -2,6 +2,10 @@
 Tornado G Analytics
 ===================
 
+.. note::
+
+    This repo has been archived and is no longer under development. OpenCredo is now part of Trifork.
+
 This is a tornado application that queries Google analytics v3 API
 
 Installation
